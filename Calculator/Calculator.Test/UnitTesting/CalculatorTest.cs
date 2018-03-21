@@ -49,7 +49,7 @@ namespace Calculator.Test.UnitTesting
             string result = "15";
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);// we will call the GetLastNumeric But we
+            JsonResponse response = calculator.CalculateNextState(request);// we call the GetLastNumeric can create stub but unneccery...
 
             //assert
             Assert.AreEqual(result, response.Display);
