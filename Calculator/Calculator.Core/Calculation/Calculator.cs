@@ -2,10 +2,10 @@
 {
     public class Calculator
     {
-        JsonResponse CalculateNextState(JsonRequest request)
+        public JsonResponse CalculateNextState(JsonRequest request)
         {
 
-            if (request.CalculatorState == null)
+            if (request.CalculatorState == default(string))
                 return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
 
             if (request.Input == "=")
