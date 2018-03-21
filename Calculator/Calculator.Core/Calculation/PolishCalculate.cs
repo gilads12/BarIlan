@@ -63,21 +63,4 @@ namespace Calculator.Core
             }
         }
     }
-
-    public class Calculator
-    {
-        JsonResponse CalculateNextState(JsonRequest request)
-        {
-
-            if (request.CalculatorState == null)
-                return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
-
-            //if (request.Input == "=")
-            //{
-            //    int result =
-            //}
-
-            else return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric() };
-        }
-    }
 }
