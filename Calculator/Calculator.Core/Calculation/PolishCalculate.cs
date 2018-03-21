@@ -43,16 +43,16 @@ namespace Calculator.Core
                 switch (((OperatorToken)token)._value)
                 {
                     case '-':
-                        stack.Push(left - right);
+                        stack.Push(right  - left);
                         break;
                     case '+':
-                        stack.Push(left + right);
+                        stack.Push(right + left);
                         break;
                     case '*':
-                        stack.Push(left * right);
+                        stack.Push(right * left);
                         break;
                     case '/':
-                        stack.Push(left / right);
+                        stack.Push(right / left);
                         break;
                     default: throw new NotValidOperationException("Get 2 numeric Tokens without Operator");
                 }

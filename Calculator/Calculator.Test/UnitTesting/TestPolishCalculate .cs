@@ -55,7 +55,7 @@ namespace Calculator.Test
         {
             //arrange 
             int expected = 3;
-            var calc = new PolishCalculate(new Token[] { new NumericToken(7), new NumericToken(21), new OperatorToken('/') });
+            var calc = new PolishCalculate(new Token[] { new NumericToken(21), new NumericToken(7), new OperatorToken('/') });
 
             //act
             int result = calc.Calculate();
@@ -69,7 +69,7 @@ namespace Calculator.Test
         public void TestDivByZeroCalculation()
         {
             //arrange 
-            var calc = new PolishCalculate(new Token[] { new NumericToken(0), new NumericToken(21), new OperatorToken('/') });
+            var calc = new PolishCalculate(new Token[] { new NumericToken(14), new NumericToken(0), new OperatorToken('/') });
 
             //act
             int result = calc.Calculate();

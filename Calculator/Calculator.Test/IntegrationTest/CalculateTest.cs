@@ -1,4 +1,5 @@
 ﻿using Calculator.Core;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = request.CalculateNextState();
 
             //assert
-            Assert.AreEqual(result, response.Display);
+            response.Display.Should().Be(result);
         }
 
         [TestMethod]
@@ -34,8 +35,36 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = request.CalculateNextState();
 
             //assert
-            Assert.AreEqual(result, response.Display);
+            response.Display.Should().Be(result);
         }
 
+        [TestMethod]
+        public void TestComplexMultCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5" };
+            string result = "37";
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
+
+
+        [TestMethod]
+        public void TestAllOperatorsCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5" };
+            string result = "7";
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Calculator.Core;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace Calculator.Test.UnitTesting
             JsonResponse response = request.CalculateNextState();
 
             //assert
-            Assert.AreEqual(response.Display, default(string));
-            Assert.AreEqual(response.CalculatorState, default(string));
+            response.Display.Should().Be(default(string));
+            response.CalculatorState.Should().Be(default(string));
         }
 
         [TestMethod]
@@ -35,7 +36,7 @@ namespace Calculator.Test.UnitTesting
             JsonResponse response = request.CalculateNextState();
 
             //assert
-            Assert.AreEqual(result, response.Display);
+            response.Display.Should().Be(result);
         }
 
         [TestMethod]
@@ -49,7 +50,7 @@ namespace Calculator.Test.UnitTesting
             JsonResponse response = request.CalculateNextState();// we call the GetLastNumeric can create stub but unneccery...
 
             //assert
-            Assert.AreEqual(result, response.Display);
+            response.Display.Should().Be(result);
         }
     }
 }

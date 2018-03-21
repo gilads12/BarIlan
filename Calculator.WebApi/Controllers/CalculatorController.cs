@@ -23,8 +23,15 @@ namespace Calculator.WebApi.Controllers
         [HttpPost]
         public JsonResponse Calculate([FromBody]JsonRequest request)
         {
-           // _logger.LogInformation("get calculate request");//to be changed
-            return request.CalculateNextState();
+            // _logger.LogInformation("get calculate request");//to be changed
+            try
+            {
+                return request.CalculateNextState();
+            }
+            catch
+            {
+                return new JsonResponse { CalculatorState = request.CalculatorState, Display = default(string) };//TBD
+            }
         }
     }
 }

@@ -14,9 +14,8 @@ namespace Calculator.Core
 
         public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request)
         {
-            return request.CalculatorState.GetTokensFromString().InfixToPostfix();
+            return request.CalculatorState.Split('=').Last().GetTokensFromString().InfixToPostfix();
         }
-
 
         private static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
@@ -48,11 +47,13 @@ namespace Calculator.Core
                 }
                 else
                 {
-                    while (stack.Count > 0)
+                    if (postfix.Count > 0)
                     {
-                        postfix.Push(stack.Pop());
+                        stack.Push(token);
+                        while (postfix.Count > 0)
+                            stack.Push(postfix.Pop());
                     }
-                    stack.Push(token);
+                    else stack.Push(token);
                 }
             }
 
