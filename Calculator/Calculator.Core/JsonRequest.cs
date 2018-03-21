@@ -20,6 +20,13 @@ namespace Calculator.Core
         {
             return state.CalculatorState.Split('-', '+', '*', '/').FirstOrDefault();
         }
+
+        public static string GetLastNumeric(this string state)
+        {
+            return state.Split('-', '+', '*', '/').FirstOrDefault();
+        }
+
+
     }
 
     public class JsonResponse : JsonState

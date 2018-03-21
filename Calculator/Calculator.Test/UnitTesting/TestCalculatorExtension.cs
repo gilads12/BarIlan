@@ -13,10 +13,10 @@ namespace Calculator.Test.UnitTesting
         public void TestReturnsNumericFromNumericChar()
         {
             //arrange 
-            char numeric = '5';
+            string numeric = "5";
 
             //act
-            Token result = numeric.GetTokenFromChar();
+            Token result = numeric.GetTokenFromString();
 
             //assert
             Assert.IsInstanceOfType(result, typeof(NumericToken));
@@ -26,10 +26,10 @@ namespace Calculator.Test.UnitTesting
         public void TestReturnsNullFromNotNumericOrOperator()
         {
             //arrange 
-            char numeric = '(';
+            string numeric = "(";
 
             //act
-            Token result = numeric.GetTokenFromChar();
+            Token result = numeric.GetTokenFromString();
 
             //assert
             Assert.IsNull(result);
@@ -39,10 +39,10 @@ namespace Calculator.Test.UnitTesting
         public void TestReturnsOperatorFromOperatorChar()
         {
             //arrange 
-            char numeric = '+';
+            string numeric = "+";
 
             //act
-            Token result = numeric.GetTokenFromChar();
+            Token result = numeric.GetTokenFromString();
 
             //assert
             Assert.IsInstanceOfType(result, typeof(OperatorToken));
