@@ -28,7 +28,7 @@ namespace Calculator.Test.IntegrationTest
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6-2" };
-            string result = "-7";
+            string result = "19";
 
             //act
             JsonResponse response = request.CalculateNextState();

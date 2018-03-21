@@ -17,7 +17,7 @@ namespace Calculator.Test.UnitTesting
             string numeric = "5";
 
             //act
-            Token result = numeric.GetTokenFromString();
+            Token result = numeric.ToToken();
 
             //assert
             Assert.IsInstanceOfType(result, typeof(NumericToken));
@@ -32,7 +32,7 @@ namespace Calculator.Test.UnitTesting
             string numeric = "(";
 
             //act
-            Token result = numeric.GetTokenFromString();
+            Token result = numeric.ToToken();
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace Calculator.Test.UnitTesting
             string numeric = "+";
 
             //act
-            Token result = numeric.GetTokenFromString();
+            Token result = numeric.ToToken();
 
             //assert
             Assert.IsInstanceOfType(result, typeof(OperatorToken));
