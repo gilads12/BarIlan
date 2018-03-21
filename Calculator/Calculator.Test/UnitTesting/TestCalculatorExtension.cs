@@ -1,9 +1,6 @@
 ﻿using Calculator.Core;
 using Calculator.Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Calculator.Test.UnitTesting
 {

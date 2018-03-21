@@ -1,9 +1,6 @@
 ﻿using Calculator.Core;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Calculator.Test.IntegrationTest
 {
@@ -52,13 +49,41 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be(result);
         }
 
-
         [TestMethod]
         public void TestAllOperatorsCalculationFromJsonRequest()
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5" };
             string result = "7";
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
+
+
+        [TestMethod]
+        public void TestMultiAssigmentsCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=3+5" };
+            string result = "8";
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
+
+        [TestMethod]
+        public void TestUnfinshedCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "+", CalculatorState = @"15+6*2-5-2/5=3+5" };
+            string result = "5";
 
             //act
             JsonResponse response = request.CalculateNextState();

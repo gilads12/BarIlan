@@ -14,7 +14,12 @@
                 return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = new PolishCalculate(tokens).Calculate().ToString() };
             }
 
-            else return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric()+request.Input };
+            else
+            {
+                if (request.Input.IsOperator())
+                    return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric() };
+                else return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric() + request.Input };
+            }
         }
     }
 }

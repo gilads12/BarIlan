@@ -1,7 +1,4 @@
-﻿using ServiceStack;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace Calculator.Core
 {
@@ -18,12 +15,12 @@ namespace Calculator.Core
     {
         public static string GetLastNumeric(this JsonState state)
         {
-            return state.CalculatorState.Split('-', '+', '*', '/').FirstOrDefault();
+            return GetLastNumeric(state.CalculatorState);
         }
 
         public static string GetLastNumeric(this string state)
         {
-            return state.Split('-', '+', '*', '/').FirstOrDefault();
+            return state.Split('-', '+', '*', '/','=').Last();
         }
 
 

@@ -1,9 +1,7 @@
 ﻿using Calculator.Core.Exceptions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Calculator.Core
@@ -71,7 +69,7 @@ namespace Calculator.Core
                 yield return s.ToToken();
             }
         }
-        private static bool IsOperator(this string str)
+        public static bool IsOperator(this string str)
         {
             if (_operatorRegex.Match(str[0].ToString()).Success)
                 return true;
