@@ -15,10 +15,9 @@ namespace Calculator.Test.UnitTesting
         {
             //arrange 
             JsonRequest request = new JsonRequest();
-            Core.Calculator calculator = new Core.Calculator();
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);
+            JsonResponse response = request.CalculateNextState();
 
             //assert
             Assert.AreEqual(response.Display, default(string));
@@ -30,11 +29,10 @@ namespace Calculator.Test.UnitTesting
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "5" };
-            Core.Calculator calculator = new Core.Calculator();
             string result = "5";
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);
+            JsonResponse response = request.CalculateNextState();
 
             //assert
             Assert.AreEqual(result, response.Display);
@@ -45,11 +43,10 @@ namespace Calculator.Test.UnitTesting
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "5", CalculatorState = "1" };
-            Core.Calculator calculator = new Core.Calculator();
             string result = "15";
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);// we call the GetLastNumeric can create stub but unneccery...
+            JsonResponse response = request.CalculateNextState();// we call the GetLastNumeric can create stub but unneccery...
 
             //assert
             Assert.AreEqual(result, response.Display);

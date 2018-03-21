@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: Calculator\Dockerfile
+
+  calculator.webapi:
+    image: calculator.webapi
+    build:
+      context: .
+      dockerfile: ..\Calculator.WebApi\Dockerfile
+

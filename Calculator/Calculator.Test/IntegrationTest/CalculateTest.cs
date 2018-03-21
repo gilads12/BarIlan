@@ -14,11 +14,10 @@ namespace Calculator.Test.IntegrationTest
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "=", CalculatorState = "15+4" };
-            Core.Calculator calculator = new Core.Calculator();
             string result = "19";
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);
+            JsonResponse response = request.CalculateNextState();
 
             //assert
             Assert.AreEqual(result, response.Display);
@@ -29,11 +28,10 @@ namespace Calculator.Test.IntegrationTest
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6-2" };
-            Core.Calculator calculator = new Core.Calculator();
             string result = "-7";
 
             //act
-            JsonResponse response = calculator.CalculateNextState(request);
+            JsonResponse response = request.CalculateNextState();
 
             //assert
             Assert.AreEqual(result, response.Display);

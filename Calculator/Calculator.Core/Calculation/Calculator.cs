@@ -1,8 +1,8 @@
 ﻿namespace Calculator.Core
 {
-    public class Calculator
+    public static class Calculator
     {
-        public JsonResponse CalculateNextState(JsonRequest request)
+        public static JsonResponse CalculateNextState(this JsonRequest request)
         {
 
             if (request.CalculatorState == default(string))

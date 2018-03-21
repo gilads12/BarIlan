@@ -4,3 +4,10 @@ networks:
   default:
     external:
       name: nat
+
+services:
+  calculator.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
