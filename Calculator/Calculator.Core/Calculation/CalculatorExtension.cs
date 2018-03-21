@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -16,13 +17,15 @@ namespace Calculator.Core
             return tokens;
         }
 
-        private static Regex _operatorRegex = new Regex(@"+|-|/|*");
+        private static Regex _operatorRegex = new Regex(@"[+-/*]");
 
         public static Token GetTokenFromString(this string str)
         {
             if (str.All(char.IsDigit))
                 return new NumericToken(int.Parse(str));
-            return new OperatorToken(str[0]);
+            if (_operatorRegex.Match(str[0].ToString()).Success)
+                return new OperatorToken(str[0]);
+            throw new NotValidTokenException();
 
         }
     }

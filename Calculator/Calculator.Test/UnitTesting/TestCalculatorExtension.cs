@@ -1,4 +1,5 @@
 ﻿using Calculator.Core;
+using Calculator.Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Calculator.Test.UnitTesting
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotValidTokenException))]
+
         public void TestReturnsNullFromNotNumericOrOperator()
         {
             //arrange 
@@ -30,9 +33,6 @@ namespace Calculator.Test.UnitTesting
 
             //act
             Token result = numeric.GetTokenFromString();
-
-            //assert
-            Assert.IsNull(result);
         }
 
         [TestMethod]

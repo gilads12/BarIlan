@@ -55,7 +55,7 @@ namespace Calculator.Test
         {
             //arrange 
             int expected = 3;
-            var calc = new PolishCalculate(new Token[] { new NumericToken(7), new NumericToken(21), new OperatorToken('/')});
+            var calc = new PolishCalculate(new Token[] { new NumericToken(7), new NumericToken(21), new OperatorToken('/') });
 
             //act
             int result = calc.Calculate();
@@ -88,6 +88,7 @@ namespace Calculator.Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotValidOperationException))]
         public void TestReturnNullNotEnoughNumerics()
         {
             //arrange 
