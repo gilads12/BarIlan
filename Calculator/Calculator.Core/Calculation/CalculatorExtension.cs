@@ -15,6 +15,12 @@ namespace Calculator.Core
             return request.CalculatorState.Split('=').Last().GetTokensFromString().InfixToPostfix();
         }
 
+        public static IEnumerable<Token> IsTokensValid(this IEnumerable<Token> tokens)
+        {
+
+            return null;
+            //trow excwption if not valid / else 
+        }
         private static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
             int start = 0, index;

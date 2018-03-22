@@ -63,7 +63,6 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be(result);
         }
 
-
         [TestMethod]
         public void TestMultiAssigmentsCalculationFromJsonRequest()
         {
@@ -91,5 +90,32 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+        [TestMethod]
+        public void TestCalculationWithNagativeNumbersFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=3-15" };
+            string result = "-12";
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
+
+        //[TestMethod]
+        //public void TestUnValidCalculationFromJsonRequest()
+        //{
+        //    arrange
+        //    JsonRequest request = new JsonRequest { Input = "+", CalculatorState = @"15+6*2-5-2/5=3+5*" };
+        //    string result = "5";
+
+        //    act
+        //    JsonResponse response = request.CalculateNextState();
+
+        //    assert
+        //    response.Display.Should().Be(result);
+        //}
     }
 }

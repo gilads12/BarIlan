@@ -19,7 +19,7 @@ namespace Calculator.WebApi.Controllers
         [HttpPost]
         public JsonResponse Calculate([FromBody]JsonRequest request)
         {
-            // _logger.LogInformation("get calculate request");//to be changed
+             _logger.LogInformation("get calculate request");//to be changed
             try
             {
                 return request.CalculateNextState();

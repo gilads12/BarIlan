@@ -1,12 +1,16 @@
 ﻿namespace Calculator.Core
 {
+
+
     public static class Calculator
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)
         {
 
             if (request.CalculatorState == default(string))
-                return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
+                if (request.Input != default(string) && request.Input.IsOperator())
+                    return new JsonResponse { CalculatorState = request.Input, Display = default(string) };
+                else return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
 
             if (request.Input == "=")
             {

@@ -11,3 +11,4 @@ C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calcu
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.AssemblyInfo.cs
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.dll
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.pdb
+C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.csproj.CopyComplete
