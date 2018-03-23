@@ -4,5 +4,4 @@
     {
         public string Display { get; set; }
     }
-
 }

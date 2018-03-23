@@ -4,5 +4,4 @@
     {
         public string CalculatorState { get; set; }
     }
-
 }

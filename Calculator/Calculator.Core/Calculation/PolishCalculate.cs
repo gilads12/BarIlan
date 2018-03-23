@@ -10,10 +10,7 @@ namespace Calculator.Core
 
         private IEnumerable<Token> m_tokens { get; set; }
 
-        public PolishCalculate(IEnumerable<Token> tokens)
-        {
-            this.m_tokens = tokens;
-        }
+        public PolishCalculate(IEnumerable<Token> tokens) => this.m_tokens = tokens;
 
         public int Calculate()
         {

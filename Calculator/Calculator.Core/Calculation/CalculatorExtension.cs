@@ -10,17 +10,18 @@ namespace Calculator.Core
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
 
-        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request)
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request.CalculatorState.Split('=').Last().GetTokensFromString().InfixToPostfix();
+        public static bool IsOperator(this string str) => str == null ? false : _operatorRegex.Match(str[0].ToString()).Success && str.Length == 1;
+        public static bool IsPositiveNumeric(this string str) => str == null ? false : str.All(char.IsDigit);
+        public static Token ToToken(this string str)
         {
-            return request.CalculatorState.Split('=').Last().GetTokensFromString().InfixToPostfix();
+            if (str.IsPositiveNumeric())
+                return new NumericToken(int.Parse(str));
+            if (str.IsOperator())
+                return new OperatorToken(str[0]);
+            throw new NotValidTokenException();
         }
 
-        public static IEnumerable<Token> IsTokensValid(this IEnumerable<Token> tokens)
-        {
-
-            return null;
-            //trow excwption if not valid / else 
-        }
         private static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
             int start = 0, index;
@@ -74,20 +75,6 @@ namespace Calculator.Core
             {
                 yield return s.ToToken();
             }
-        }
-        public static bool IsOperator(this string str)
-        {
-            if (_operatorRegex.Match(str[0].ToString()).Success)
-                return true;
-            return false;
-        }
-        public static Token ToToken(this string str)
-        {
-            if (str.All(char.IsDigit))
-                return new NumericToken(int.Parse(str));
-            if (str.IsOperator())
-                return new OperatorToken(str[0]);
-            throw new NotValidTokenException();
         }
 
     }

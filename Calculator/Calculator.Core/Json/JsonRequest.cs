@@ -4,5 +4,4 @@
     {
         public string Input { get; set; }
     }
-
 }

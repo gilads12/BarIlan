@@ -6,6 +6,8 @@
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)
         {
+            if (!request.IsInputValid())
+                return new JsonResponse { CalculatorState = request.CalculatorState, Display = default(string) };
 
             if (request.CalculatorState == default(string))
                 if (request.Input != default(string) && request.Input.IsOperator())
