@@ -1,8 +1,11 @@
 version: '3'
 
+
 services:
   calculator.webapi:
     image: calculatorwebapi
     build:
       context: .
       dockerfile: Calculator.WebApi/Dockerfile
+    ports:
+    - "192.168.99.100:5000:5000"
