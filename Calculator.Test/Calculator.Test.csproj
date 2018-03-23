@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Calculator.WebApi\Calculator.WebApi.csproj" />
     <ProjectReference Include="..\Calculator.Core\Calculator.Core.csproj" />
+    <ProjectReference Include="..\Calculator.WebApi\Calculator.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
