@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Core", "Calculator.Core\Calculator.Core.csproj", "{4DB48243-1454-419A-ADC1-7723BAA4D6B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Test", "Calculator.Test\Calculator.Test.csproj", "{8DC67793-94AC-4672-98DB-AED57B323456}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.WebApi", "Calculator.WebApi\Calculator.WebApi.csproj", "{AC283BF3-8F91-4F0D-A444-459093A04D64}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9DC8474D-1159-4A50-A286-F12439693C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Test", "..\Calculator.Test\Calculator.Test.csproj", "{3D62A410-491E-4000-B3DD-0312E3CB8761}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{4DB48243-1454-419A-ADC1-7723BAA4D6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DB48243-1454-419A-ADC1-7723BAA4D6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DB48243-1454-419A-ADC1-7723BAA4D6B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DC67793-94AC-4672-98DB-AED57B323456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DC67793-94AC-4672-98DB-AED57B323456}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DC67793-94AC-4672-98DB-AED57B323456}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DC67793-94AC-4672-98DB-AED57B323456}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC283BF3-8F91-4F0D-A444-459093A04D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC283BF3-8F91-4F0D-A444-459093A04D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC283BF3-8F91-4F0D-A444-459093A04D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{9DC8474D-1159-4A50-A286-F12439693C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC8474D-1159-4A50-A286-F12439693C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC8474D-1159-4A50-A286-F12439693C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

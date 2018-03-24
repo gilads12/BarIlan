@@ -1,5 +1,6 @@
 ﻿using Calculator.Core;
 using Calculator.Core.Exceptions;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Calculator.Test.UnitTesting
@@ -17,7 +18,7 @@ namespace Calculator.Test.UnitTesting
             Token result = numeric.ToToken();
 
             //assert
-            Assert.IsInstanceOfType(result, typeof(NumericToken));
+            result.Should().BeOfType(typeof(NumericToken));
         }
 
         [TestMethod]
@@ -42,20 +43,38 @@ namespace Calculator.Test.UnitTesting
             Token result = numeric.ToToken();
 
             //assert
-            Assert.IsInstanceOfType(result, typeof(OperatorToken));
+            result.Should().BeOfType(typeof(OperatorToken));
         }
 
-        //[TestMethod]
-        //public void TestReturnsNumericFromNotNumericBiggerThenNine()
+        [TestMethod]
+        public void TestIsOperatorFromOperatorAndNumeric()
+        {
+            //arrange 
+            string numeric = "+4";
+
+            //act
+            bool result = numeric.IsOperator();
+
+            //assert
+            result.Should().Be(false);
+        }
+        
+        //[testmethod]
+        //public void testsplitandkeep()
         //{
         //    //arrange 
-        //    char numeric = '11';
+        //    string str = "12+3+5=3=7-5*36";
+        //    privatetype privatetype = new privatetype(typeof(myclass));
+
 
         //    //act
-        //    Token result = numeric.GetTokenFromChar();
+        //    privateobject obj = new privateobject(target);
+        //    var retval = obj.invoke("privatemethod");
+        //    assert.areequal(retval, expectedval);
+        //    token result = str.splitandkeep(new char[] { '+', '5' });
 
         //    //assert
-        //    Assert.IsNull(result);
+        //    result.should().beoftype(typeof(operatortoken));
         //}
     }
 }
