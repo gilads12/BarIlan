@@ -27,7 +27,7 @@ namespace Calculator.WebApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e,"Get bad request");//to be changed
+                _logger.LogError(e,"Get bad request!");//to be changed
                 return new JsonResponse { CalculatorState = request.CalculatorState, Display = default(string) };//TBD
             }
         }
