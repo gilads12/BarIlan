@@ -17,6 +17,7 @@ namespace Calculator.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAntiforgery(setupAction: opts => opts.CookieName = "AntiForgery.CalcApp");
             services.AddLogging();
             services.AddMvc();
         }
