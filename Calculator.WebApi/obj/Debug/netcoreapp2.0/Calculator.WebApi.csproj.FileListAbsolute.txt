@@ -12,3 +12,17 @@ C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calcu
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.dll
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.pdb
 C:\Users\gilad\Documents\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.csproj.CopyComplete
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.csprojResolveAssemblyReference.cache
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.csproj.CoreCompileInputs.cache
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.AssemblyInfoInputs.cache
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.AssemblyInfo.cs
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.dll
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.pdb
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.WebApi.deps.json
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.WebApi.runtimeconfig.json
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.WebApi.runtimeconfig.dev.json
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.WebApi.dll
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.WebApi.pdb
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.Core.dll
+C:\Users\gilad\BarIlan\Calculator.WebApi\bin\Debug\netcoreapp2.0\Calculator.Core.pdb
+C:\Users\gilad\BarIlan\Calculator.WebApi\obj\Debug\netcoreapp2.0\Calculator.WebApi.csproj.CopyComplete

@@ -15,6 +15,8 @@ namespace Calculator.Test.UnitTesting
         [TestMethod]
         public void TestjsonRequestFromController()// todo rename 
         {
+            //todo add mock for static class
+
             //arrange
             var controller = new CalculatorController(new NullLogger<CalculatorController>());
             var request = new JsonRequest { CalculatorState = "1+4", Input = "=" };

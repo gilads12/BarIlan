@@ -5,4 +5,4 @@ services:
     image: calculatorwebapi
     build:
       context: .
-      dockerfile: ..\Calculator.WebApi\Dockerfile
+      dockerfile: Calculator.WebApi/Dockerfile

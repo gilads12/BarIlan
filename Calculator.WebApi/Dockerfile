@@ -1,15 +1,15 @@
-FROM microsoft/aspnetcore:2.0-nanoserver-1709 AS base
+FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0-nanoserver-1709 AS build
+FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
 COPY Calculator.sln ./
-COPY ../Calculator.WebApi/Calculator.WebApi.csproj ../Calculator.WebApi/
+COPY Calculator.WebApi/Calculator.WebApi.csproj Calculator.WebApi/
 COPY Calculator.Core/Calculator.Core.csproj Calculator.Core/
 RUN dotnet restore -nowarn:msb3202,nu1503
 COPY . .
-WORKDIR /src/../Calculator.WebApi
+WORKDIR /src/Calculator.WebApi
 RUN dotnet build -c Release -o /app
 
 FROM build AS publish

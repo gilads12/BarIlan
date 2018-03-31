@@ -13513,13 +13513,14 @@
     },
     "Calculator.Core/1.0.0": {
       "type": "project",
-      "path": "../Calculator/Calculator.Core/Calculator.Core.csproj",
-      "msbuildProject": "../Calculator/Calculator.Core/Calculator.Core.csproj"
+      "path": "../Calculator.Core/Calculator.Core.csproj",
+      "msbuildProject": "../Calculator.Core/Calculator.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Calculator.Core >= 1.0.0",
+      "Microsoft.ApplicationInsights.AspNetCore >= 2.1.1",
       "Microsoft.AspNetCore.All >= 2.0.5",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
@@ -13531,15 +13532,12 @@
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "C:\\Users\\gilad\\Documents\\BarIlan\\Calculator.WebApi\\Calculator.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\gilad\\BarIlan\\Calculator.WebApi\\Calculator.WebApi.csproj",
       "projectName": "Calculator.WebApi",
-      "projectPath": "C:\\Users\\gilad\\Documents\\BarIlan\\Calculator.WebApi\\Calculator.WebApi.csproj",
+      "projectPath": "C:\\Users\\gilad\\BarIlan\\Calculator.WebApi\\Calculator.WebApi.csproj",
       "packagesPath": "C:\\Users\\gilad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gilad\\Documents\\BarIlan\\Calculator.WebApi\\obj\\",
+      "outputPath": "C:\\Users\\gilad\\BarIlan\\Calculator.WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
@@ -13560,8 +13558,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\gilad\\Documents\\BarIlan\\Calculator\\Calculator.Core\\Calculator.Core.csproj": {
-              "projectPath": "C:\\Users\\gilad\\Documents\\BarIlan\\Calculator\\Calculator.Core\\Calculator.Core.csproj"
+            "C:\\Users\\gilad\\BarIlan\\Calculator.Core\\Calculator.Core.csproj": {
+              "projectPath": "C:\\Users\\gilad\\BarIlan\\Calculator.Core\\Calculator.Core.csproj"
             }
           }
         }
@@ -13575,6 +13573,10 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "Microsoft.ApplicationInsights.AspNetCore": {
+            "target": "Package",
+            "version": "[2.1.1, )"
+          },
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "[2.0.5, )"

@@ -5,7 +5,12 @@ using System.Linq;
 namespace Calculator.Core
 {
 
-    public class PolishCalculate
+    public interface ICalculate// needed only for mocking PolishCalculate
+    {
+        int Calculate();
+    }
+
+    public class PolishCalculate:ICalculate
     {
 
         private IEnumerable<Token> m_tokens { get; set; }
@@ -26,7 +31,7 @@ namespace Calculator.Core
             return stack.Pop();
         }
 
-        void Calculate(Stack<int> stack, Token token)
+        private void Calculate(Stack<int> stack, Token token)
         {
             if (token is OperatorToken)
             {

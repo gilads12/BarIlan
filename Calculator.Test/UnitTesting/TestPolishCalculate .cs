@@ -1,5 +1,6 @@
 using Calculator.Core;
 using Calculator.Core.Exceptions;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -19,7 +20,7 @@ namespace Calculator.Test
             int result = calc.Calculate();
 
             //assert
-            Assert.AreEqual(expected, result);
+            expected.Should().Be(result);
         }
 
         [TestMethod]
@@ -33,7 +34,7 @@ namespace Calculator.Test
             int result = calc.Calculate();
 
             //assert
-            Assert.AreEqual(expected, result);
+            expected.Should().Be(result);
         }
 
         [TestMethod]
@@ -47,7 +48,7 @@ namespace Calculator.Test
             int result = calc.Calculate();
 
             //assert
-            Assert.AreEqual(expected, result);
+            expected.Should().Be(result);
         }
 
         [TestMethod]
@@ -61,7 +62,7 @@ namespace Calculator.Test
             int result = calc.Calculate();
 
             //assert
-            Assert.AreEqual(expected, result);
+            expected.Should().Be(result);
         }
 
         [TestMethod]
