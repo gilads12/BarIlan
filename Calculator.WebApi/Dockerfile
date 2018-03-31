@@ -1,7 +1,6 @@
 FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
-ENV ASPNETCORE_URLS=http://+:5000
-EXPOSE 5000
+EXPOSE 80
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
@@ -13,7 +12,7 @@ COPY . .
 WORKDIR /src/Calculator.WebApi
 RUN dotnet build -c Release -o /app
 
-FROM build AS publishhttp://bit.ly/webdev-barilan
+FROM build AS publish
 RUN dotnet publish -c Release -o /app
 
 FROM base AS final
