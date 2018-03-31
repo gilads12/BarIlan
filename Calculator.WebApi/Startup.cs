@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace Calculator.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAntiforgery(setupAction: opts => opts.CookieName = "AntiForgery.CalcApp");
+            services.AddDataProtection().SetApplicationName("CalcApp");
             services.AddLogging();
             services.AddMvc();
         }
