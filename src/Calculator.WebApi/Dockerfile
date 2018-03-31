@@ -4,9 +4,7 @@ EXPOSE 80
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
-COPY Calculator.sln ./
-COPY src/Calculator.WebApi/Calculator.WebApi.csproj src/Calculator.WebApi/
-COPY src/Calculator.Core/Calculator.Core.csproj src/Calculator.Core/
+COPY . .
 RUN dotnet restore -nowarn:msb3202,nu1503
 COPY . .
 WORKDIR /src/src/Calculator.WebApi
