@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Calculator.WebApi
 {
@@ -13,6 +14,7 @@ namespace Calculator.WebApi
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();
     }
