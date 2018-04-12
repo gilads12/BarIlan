@@ -1,19 +1,13 @@
-FROM microsoft/aspnetcore:2.0 AS base
+FROM microsoft/dotnet:latest
+
+COPY . /app
+
 WORKDIR /app
-EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0 AS build
-WORKDIR /src
-COPY . /.
-RUN dotnet restore -nowarn:msb3202,nu1503
-WORKDIR src/src/Calculator.WebApi
-#RUN dotnet build --no-restore -c Release -o /app
-RUN dotnet build -c Release -o /app
+RUN ["dotnet", "restore"]
 
-FROM build AS publish
-RUN dotnet publish -c Release -o /app
+RUN ["dotnet", "build"]
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "Calculator.WebApi.dll"]
+EXPOSE 5000/tcp
+
+ENTRYPOINT ["dotnet", "run", "--server.urls", "http://0.0.0.0:5000"]
