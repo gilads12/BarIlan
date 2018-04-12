@@ -2,7 +2,7 @@ FROM microsoft/dotnet:latest
 
 WORKDIR /src
 COPY . /.
-RUN dotnet restore -nowarn:msb3202,nu1503
+RUN dotnet restore -nowarn:msb3202,nu1503,MSB1003
 
 COPY . /app
 
