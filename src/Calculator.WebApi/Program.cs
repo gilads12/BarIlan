@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog.Extensions.Logging;
 using System.IO;
 
 namespace Calculator.WebApi
@@ -14,6 +16,10 @@ namespace Calculator.WebApi
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
+                .ConfigureLogging(logging =>
+                  {
+                      logging.AddFilter<SerilogLoggerProvider>("Microsoft", LogLevel.Information);
+                  })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

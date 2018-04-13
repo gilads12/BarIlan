@@ -15,15 +15,15 @@ namespace Calculator.WebApi.Controllers
         public CalculatorController(ILogger<CalculatorController> logger)
         {
             this._logger = logger;
+            this._logger.LogInformation("Calculator is up");
         }
 
-        // POST api/
         [HttpPost("Calculate")]
         public IActionResult Calculate([FromBody]JsonRequest request)
         {
-            _logger.LogInformation("Get calculate request");//to be changed
             if (null == request)
                 return new BadRequestResult();
+            _logger.LogInformation($"Get calculate request. CalculatorState: {request.CalculatorState}, Input: {request.Input}.");
             try
             {
                 return this.Ok(request.CalculateNextState());
