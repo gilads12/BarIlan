@@ -4,6 +4,8 @@ COPY . /app
 
 WORKDIR /app
 
+COPY ../Calculator.Core/Calculator.Core.csproj ./
+
 RUN dotnet restore ./Calculator.WebApi.csproj
 
 RUN dotnet build ./Calculator.WebApi.csproj
