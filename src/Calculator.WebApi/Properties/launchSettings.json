@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:61538",
+      "applicationUrl": "http://localhost:50353/",
       "sslPort": 0
     }
   },
@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:61538",
+      "launchUrl": "swagger/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -19,10 +19,11 @@
     "Calculator.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:61539"
+      "applicationUrl": "http://localhost:50354/"
     }
   }
 }

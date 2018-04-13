@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Test", "..\Calculator.Test\Calculator.Test.csproj", "{3D62A410-491E-4000-B3DD-0312E3CB8761}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.WebApi", "src\Calculator.WebApi\Calculator.WebApi.csproj", "{C5B92A3B-D457-41AC-8977-23B100F6AF1B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Core", "src\Calculator.Core\Calculator.Core.csproj", "{01DF4B76-2062-428A-9AF6-F0A8C56CA0D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.WebApi", "src\Calculator.WebApi\Calculator.WebApi.csproj", "{50F49833-CE62-41D0-A898-0CFDE342A9D6}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{29C3816E-7DFB-4558-8512-D8A6DC7E5A7C}"
 EndProject
@@ -21,14 +21,14 @@ Global
 		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D62A410-491E-4000-B3DD-0312E3CB8761}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5B92A3B-D457-41AC-8977-23B100F6AF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5B92A3B-D457-41AC-8977-23B100F6AF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5B92A3B-D457-41AC-8977-23B100F6AF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5B92A3B-D457-41AC-8977-23B100F6AF1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01DF4B76-2062-428A-9AF6-F0A8C56CA0D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01DF4B76-2062-428A-9AF6-F0A8C56CA0D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01DF4B76-2062-428A-9AF6-F0A8C56CA0D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01DF4B76-2062-428A-9AF6-F0A8C56CA0D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F49833-CE62-41D0-A898-0CFDE342A9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F49833-CE62-41D0-A898-0CFDE342A9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F49833-CE62-41D0-A898-0CFDE342A9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F49833-CE62-41D0-A898-0CFDE342A9D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29C3816E-7DFB-4558-8512-D8A6DC7E5A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29C3816E-7DFB-4558-8512-D8A6DC7E5A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29C3816E-7DFB-4558-8512-D8A6DC7E5A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
