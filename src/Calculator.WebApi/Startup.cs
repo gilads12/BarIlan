@@ -19,13 +19,13 @@ namespace Calculator.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging();
             services.AddMvc();
             // Register the Swagger generator, defining one or more Swagger documents  
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +58,8 @@ namespace Calculator.WebApi
                           name: "default",
                           template: "{controller=Todo}/{action=Index}/{id?}");
             });
+
+            
 
             app.UseMvc();
         }

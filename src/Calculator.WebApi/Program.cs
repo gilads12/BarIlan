@@ -18,7 +18,7 @@ namespace Calculator.WebApi
                 .UseApplicationInsights()
                 .ConfigureLogging(logging =>
                   {
-                      logging.AddFilter<SerilogLoggerProvider>("Microsoft", LogLevel.Information);
+                      logging.AddFilter("Microsoft", LogLevel.Information);
                   })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()

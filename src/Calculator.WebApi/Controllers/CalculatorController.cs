@@ -15,7 +15,6 @@ namespace Calculator.WebApi.Controllers
         public CalculatorController(ILogger<CalculatorController> logger)
         {
             this._logger = logger;
-            this._logger.LogInformation("Calculator is up");
         }
 
         [HttpPost("Calculate")]
