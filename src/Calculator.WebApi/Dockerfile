@@ -1,14 +1,10 @@
 FROM microsoft/dotnet:latest
-
-WORKDIR /src
-COPY /Calculator.Core/Calculator.Core.csproj /app
-
 COPY . /app
-
-WORKDIR /app
-
+WORKDIR /app/src/Calculator.Core
 RUN ["dotnet", "restore"]
 
+WORKDIR /app/src/Calculator.WebApi
+RUN ["dotnet", "restore"]
 RUN ["dotnet", "build"]
 
 EXPOSE 5000/tcp
