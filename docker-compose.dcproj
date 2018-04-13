@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>8547eddc-860a-4707-be16-43c900f93477</ProjectGuid>
+    <ProjectGuid>29c3816e-7dfb-4558-8512-d8a6dc7e5a7c</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>http://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>calculator.webapi</DockerServiceName>
