@@ -16,10 +16,6 @@ namespace Calculator.WebApi
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
-                .ConfigureLogging(logging =>
-                  {
-                      logging.AddFilter("Microsoft", LogLevel.Information);
-                  })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

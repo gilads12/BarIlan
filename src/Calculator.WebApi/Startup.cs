@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,18 +47,8 @@ namespace Calculator.WebApi
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/swagger/v1/swagger.json", "My API V1");
             });
-
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                          name: "default",
-                          template: "{controller=Todo}/{action=Index}/{id?}");
-            });
-
-            
 
             app.UseMvc();
         }
