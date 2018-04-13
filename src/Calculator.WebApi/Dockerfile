@@ -1,7 +1,6 @@
 FROM microsoft/dotnet:latest
 
 WORKDIR /src
-COPY *.sln ./
 COPY /Calculator.Core/Calculator.Core.csproj /app
 
 COPY . /app
