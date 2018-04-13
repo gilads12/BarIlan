@@ -4,9 +4,9 @@ COPY . /app
 
 WORKDIR /app
 
-RUN ["dotnet", "restore ./Calculator.WebApi.csproj"]
+RUN dotnet restore ./Calculator.WebApi.csproj
 
-RUN ["dotnet", "build ./Calculator.WebApi.csproj"]
+RUN dotnet build ./Calculator.WebApi.csproj
 
 EXPOSE 5000/tcp
 
