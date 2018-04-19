@@ -19,7 +19,7 @@ namespace Calculator.Core
                 return new NumericToken(int.Parse(str));
             if (str.IsOperator())
                 return new OperatorToken(str[0]);
-            throw new NotValidTokenException();
+            throw new NotValidTokenException(str);
         }
 
         private static IEnumerable<string> SplitAndKeep(this string s, char[] delims)

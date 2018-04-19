@@ -1,4 +1,6 @@
-﻿namespace Calculator.Core
+﻿using Calculator.Core.Exceptions;
+
+namespace Calculator.Core
 {
     // static class that has no state !!!
     public static class Calculator
@@ -6,11 +8,11 @@
         public static JsonResponse CalculateNextState(this JsonRequest request)
         {
             if (!request.IsInputValid())
-                return new JsonResponse { CalculatorState = request.CalculatorState, Display = default(string) };
+                throw new NotValidInput(request.Input);
 
             if (request.CalculatorState == default(string))
                 if (request.Input != default(string) && request.Input.IsOperator())
-                    return new JsonResponse { CalculatorState = request.Input, Display = default(string) };
+                    throw new NotValidInput(request.Input);
                 else return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
 
             if (request.Input == "=")

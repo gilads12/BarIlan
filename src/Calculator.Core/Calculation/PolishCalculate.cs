@@ -36,7 +36,7 @@ namespace Calculator.Core
             if (token is OperatorToken)
             {
                 if (stack.Count < 2)
-                    throw new NotValidOperationException();
+                    throw new NotValidOperationException("Not enuoth numeric");
                 int left = stack.Pop();
                 int right = stack.Pop();
 

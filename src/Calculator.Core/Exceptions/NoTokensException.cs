@@ -2,19 +2,12 @@
 
 namespace Calculator.Core.Exceptions
 {
-    public class NoTokensException : Exception
+    public class NoTokensException : GlobalException
     {
+        public override string ErrorMessage => "Get no tokens error!";
+
         public NoTokensException()
         {
         }
-
-        public NoTokensException(string message) : base(message)
-        {
-        }
-
-        public NoTokensException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
     }
 }

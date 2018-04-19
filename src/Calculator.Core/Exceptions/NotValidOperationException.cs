@@ -2,18 +2,14 @@
 
 namespace Calculator.Core.Exceptions
 {
-    public class NotValidOperationException : Exception
+    public class NotValidOperationException : GlobalException
     {
-        public NotValidOperationException()
-        {
-        }
+        public string Operation { get; set; }
+        public override string ErrorMessage => $"Invalid operation request. Operation : {Operation} can't be calculate!";
 
-        public NotValidOperationException(string message) : base(message)
+        public NotValidOperationException(string operation)
         {
-        }
-
-        public NotValidOperationException(string message, Exception innerException) : base(message, innerException)
-        {
+            Operation = operation;
         }
 
     }

@@ -2,18 +2,15 @@
 
 namespace Calculator.Core.Exceptions
 {
-    public class NotValidTokenException : Exception
+    public class NotValidTokenException : GlobalException
     {
-        public NotValidTokenException()
+        public string Token { get; set; }
+        public override string ErrorMessage => $"{Token} is not valid token!";
+
+        public NotValidTokenException(string token)
         {
+            Token = token;
         }
 
-        public NotValidTokenException(string message) : base(message)
-        {
-        }
-
-        public NotValidTokenException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
     }
 }

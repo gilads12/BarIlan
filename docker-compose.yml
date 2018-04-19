@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   calculator.webapi:
-    image: calculatorwebapi:1.0.1
+    image: calculatorwebapi:1.0.2
     build:
       context: .
       dockerfile: src/Calculator.WebApi/Dockerfile

@@ -30,7 +30,7 @@ namespace Calculator.WebApi
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 
             });
-            services.AddLogging();
+          // services.AddLogging();
             services.AddMvc();
 
         }
@@ -50,11 +50,8 @@ namespace Calculator.WebApi
             }
             app.UseStaticFiles();
 
-
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>

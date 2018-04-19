@@ -1,4 +1,5 @@
 ﻿using Calculator.Core;
+using Calculator.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,9 +28,9 @@ namespace Calculator.WebApi.Controllers
             {
                 return this.Ok(request.CalculateNextState());
             }
-            catch (Exception e)
+            catch (GlobalException e)
             {
-                _logger.LogError(e, "Get bad request!");//to be changed
+                _logger.LogError(e.ErrorMessage);
                 return this.Ok(new JsonResponse { CalculatorState = request.CalculatorState, Display = default(string) });//TBD
             }
         }
