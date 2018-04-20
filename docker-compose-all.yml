@@ -3,32 +3,30 @@ version: '3.1'
 services:
   
   currency-calculator:
-    image: calculatorwebapi:1.0.2
+    image: calculatorwebapi
     ports: ["80"]
    
   redis:
     image: redis:alpine
     container_name: redis
     ports: ["6379"]
-    networks:
-      - back-tier
   
-  user-service:	
-    image: webdevtoolsandtech/user-service	
-    ports: [ "80"]	
-    environment:	
-      REDIS_ADDRESS: 'redis:6379'	
+  user-service:
+    image: webdevtoolsandtech/user-service
+    ports: ["80"]
+    environment:
+      REDIS_ADDRESS: 'redis:6379'
 
-  currency-frontend:	
-    image: webdevtoolsandtech/currency-frontend	
-    ports: [ "80"]
+  currency-frontend:
+    image: webdevtoolsandtech/currency-frontend
+    ports: ["80"]
     
-  currency-frontend:    
-    image: webdevtoolsandtech/currency-backend	
-    ports:	["80"]
-    environment:	
-      REDIS_ADDRESS: 'redis:6379'	
-      SESSION_SECRET: 'shmuelandgilad'	
-      USER_SERVICE_ADDRESS: 'user-service'	
-      FRONTEND_ADDRESS: 'currency-frontend'	
-      CALCULATOR_ADDRESS: 'currency-calculator' 
+  currency-frontend:
+    image: webdevtoolsandtech/currency-backend
+    ports: ["80"]
+    environment:
+      REDIS_ADDRESS: 'redis:6379'
+      SESSION_SECRET: 'shmuelandgilad'
+      USER_SERVICE_ADDRESS: 'user-service'
+      FRONTEND_ADDRESS: 'currency-frontend'
+      CALCULATOR_ADDRESS: 'currency-calculator'

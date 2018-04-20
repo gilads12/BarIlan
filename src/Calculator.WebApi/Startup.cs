@@ -30,7 +30,7 @@ namespace Calculator.WebApi
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 
             });
-          // services.AddLogging();
+          
             services.AddMvc();
 
         }

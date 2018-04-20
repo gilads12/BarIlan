@@ -10,7 +10,7 @@ namespace Calculator.Core
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
 
-        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request.CalculatorState.Split('=').Last().GetTokensFromString().InfixToPostfix();
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request.CalculatorState.Replace("=","").GetTokensFromString().InfixToPostfix();
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
         public static bool IsPositiveNumeric(this string str) => str == null ? false : str.All(char.IsDigit);
         public static Token ToToken(this string str)
