@@ -10,12 +10,14 @@ namespace Calculator.Core
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
 
+
+
         public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request.CalculatorState.Replace("=","").GetTokensFromString().InfixToPostfix();
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
-        public static bool IsPositiveNumeric(this string str) => str == null ? false : str.All(char.IsDigit);
+        public static bool IsNumeric(this string str) => str == null ? false : str.All(char.IsDigit);
         public static Token ToToken(this string str)
         {
-            if (str.IsPositiveNumeric())
+            if (str.IsNumeric())
                 return new NumericToken(int.Parse(str));
             if (str.IsOperator())
                 return new OperatorToken(str[0]);
