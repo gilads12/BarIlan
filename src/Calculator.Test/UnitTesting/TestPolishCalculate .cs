@@ -13,11 +13,11 @@ namespace Calculator.Test
         public void TestReturnsToTopIfOnlyNumbers()
         {
             //arrange 
-            int expected = 1;
+            float expected = 1;
             var calc = new PolishCalculate(new Token[] { new NumericToken(6), new NumericToken(5), new NumericToken(1) });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
 
             //assert
             expected.Should().Be(result);
@@ -27,11 +27,11 @@ namespace Calculator.Test
         public void TestSumCalculation()
         {
             //arrange 
-            int expected = 9;
+            float expected = 9;
             var calc = new PolishCalculate(new Token[] { new NumericToken(6), new NumericToken(3), new OperatorToken('+') });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
 
             //assert
             expected.Should().Be(result);
@@ -41,11 +41,11 @@ namespace Calculator.Test
         public void TestComplexCalculation()
         {
             //arrange 
-            int expected = 1;
+            float expected = 0.5f;
             var calc = new PolishCalculate(new Token[] { new NumericToken(4), new NumericToken(3), new NumericToken(11), new NumericToken(22), new OperatorToken('/'), new OperatorToken('+'), new OperatorToken('-') });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
 
             //assert
             expected.Should().Be(result);
@@ -55,25 +55,28 @@ namespace Calculator.Test
         public void TestDivCalculation()
         {
             //arrange 
-            int expected = 3;
+            float expected = 3;
             var calc = new PolishCalculate(new Token[] { new NumericToken(21), new NumericToken(7), new OperatorToken('/') });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
 
             //assert
             expected.Should().Be(result);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DivideByZeroException))]
         public void TestDivByZeroCalculation()
         {
             //arrange 
+            bool flag = true;
             var calc = new PolishCalculate(new Token[] { new NumericToken(14), new NumericToken(0), new OperatorToken('/') });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
+
+            //assert
+            flag.Should().Be(float.IsInfinity(result));
         }
 
         [TestMethod]
@@ -85,7 +88,7 @@ namespace Calculator.Test
             var calc = new PolishCalculate(new Token[] { });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
         }
 
         [TestMethod]
@@ -96,10 +99,39 @@ namespace Calculator.Test
             var calc = new PolishCalculate(new Token[] { new NumericToken(1), new OperatorToken('+') });
 
             //act
-            int result = calc.Calculate();
+            float result = calc.Calculate();
 
             //assert
-            Assert.IsNull(result);
+            calc.Should().BeNull();
+        }
+
+       [TestMethod]
+       public void TestFloatResoult()
+        {
+            //arrange 
+            float expected = 2.5f;
+            var calc = new PolishCalculate(new Token[] { new NumericToken(10), new NumericToken(4), new OperatorToken('/') });
+
+            //act
+            float result = calc.Calculate();
+
+            //assert
+            expected.Should().Be(result);
+
+        }
+        [TestMethod]
+        public void TestFloatParameter()
+        {
+            //arrange 
+            float expected = 4;
+            var calc = new PolishCalculate(new Token[] { new NumericToken(14), new NumericToken(3.5f), new OperatorToken('/') });
+
+            //act
+            float result = calc.Calculate();
+
+            //assert
+            expected.Should().Be(result);
+
         }
     }
 }

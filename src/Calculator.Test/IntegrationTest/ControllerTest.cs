@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,7 +91,7 @@ namespace Calculator.Test.IntegrationTest
         }
 
         [TestMethod]
-        public async Task TestComplexSumAndMultRteutResoultAsync()
+        public async Task TestComplexSumAndMultRteurnResoultAsync()
         {
             // Arrange
             var request = new JsonRequest
@@ -112,6 +110,28 @@ namespace Calculator.Test.IntegrationTest
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be("11");
+        }
+
+        [TestMethod]
+        public async Task TestComplexSumAndMultRteurnFloatResoultAsync()
+        {
+            // Arrange
+            var request = new JsonRequest
+            {
+                CalculatorState = @"3+8/2+6",
+                Input = "="
+            };
+            var content = JsonConvert.SerializeObject(request);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
+            jsonResponse.Display.Should().Be("11.5");
         }
 
     }
