@@ -21,7 +21,20 @@ namespace Calculator.Test.UnitTesting
             result.Should().BeOfType(typeof(NumericToken));
         }
 
-        
+        [TestMethod]
+        public void TestReturnsNumericFromFloatNumericString()
+        {
+            //arrange 
+            string numeric = ".5";
+
+            //act
+            Token result = numeric.ToToken();
+
+            //assert
+            result.Should().BeOfType(typeof(NumericToken));
+        }
+
+
         [TestMethod]
         [ExpectedException(typeof(NotValidTokenException))]
 

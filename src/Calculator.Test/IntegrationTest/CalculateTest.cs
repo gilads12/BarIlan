@@ -21,7 +21,33 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+        [TestMethod]
+        public void TestFloatSumCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = "15.2+4.5" };
+            string result = "19.7";
 
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
+
+        [TestMethod]
+        public void TestFloatDivCalculationFromJsonRequest()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = "10/3" };
+            string result = (10/3f).ToString();
+
+            //act
+            JsonResponse response = request.CalculateNextState();
+
+            //assert
+            response.Display.Should().Be(result);
+        }
         [TestMethod]
         public void TestComplexCalculationFromJsonRequest()
         {
@@ -146,7 +172,7 @@ namespace Calculator.Test.IntegrationTest
         }
 
 
-       
+
 
 
     }
