@@ -45,7 +45,6 @@ namespace Calculator.Test.IntegrationTest
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be("1");
         }
-
         [TestMethod]
         public async Task TestEmptyStateOperatorInputRteutnInputAsync()
         {
@@ -67,7 +66,6 @@ namespace Calculator.Test.IntegrationTest
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be(default(string));
         }
-
         [TestMethod]
         public async Task TestDoubleInputRteutnInputAsync()
         {
@@ -89,7 +87,6 @@ namespace Calculator.Test.IntegrationTest
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be(default(string));
         }
-
         [TestMethod]
         public async Task TestComplexSumAndMultRteurnResoultAsync()
         {
@@ -111,7 +108,6 @@ namespace Calculator.Test.IntegrationTest
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be("11");
         }
-
         [TestMethod]
         public async Task TestComplexSumAndMultRteurnFloatResoultAsync()
         {
@@ -132,6 +128,48 @@ namespace Calculator.Test.IntegrationTest
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
             jsonResponse.Display.Should().Be("11.5");
+        }
+        [TestMethod]
+        public async Task TestNegativeParameterAsync()
+        {
+            // Arrange
+            var request = new JsonRequest
+            {
+                CalculatorState = @"-3+8/5+6--1",
+                Input = "="
+            };
+            var content = JsonConvert.SerializeObject(request);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
+            jsonResponse.Display.Should().Be("0");
+        }
+        [TestMethod]
+        public async Task TestNegativeResultAsync()
+        {
+            // Arrange
+            var request = new JsonRequest
+            {
+                CalculatorState = @"2+8/5-6",
+                Input = "="
+            };
+            var content = JsonConvert.SerializeObject(request);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
+            jsonResponse.Display.Should().Be("-4");
         }
 
     }

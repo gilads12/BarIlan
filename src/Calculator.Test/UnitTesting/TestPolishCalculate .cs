@@ -105,8 +105,8 @@ namespace Calculator.Test
             calc.Should().BeNull();
         }
 
-       [TestMethod]
-       public void TestFloatResoult()
+        [TestMethod]
+        public void TestFloatResoult()
         {
             //arrange 
             float expected = 2.5f;
@@ -125,6 +125,20 @@ namespace Calculator.Test
             //arrange 
             float expected = 4;
             var calc = new PolishCalculate(new Token[] { new NumericToken(14), new NumericToken(3.5f), new OperatorToken('/') });
+
+            //act
+            float result = calc.Calculate();
+
+            //assert
+            expected.Should().Be(result);
+
+        }
+        [TestMethod]
+        public void TestNegativeParameterAndResoult()
+        {
+            //arrange 
+            float expected = -4;
+            var calc = new PolishCalculate(new Token[] { new NumericToken(-14), new NumericToken(3.5f), new OperatorToken('/') });
 
             //act
             float result = calc.Calculate();

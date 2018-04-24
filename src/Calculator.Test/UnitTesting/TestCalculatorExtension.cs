@@ -34,6 +34,18 @@ namespace Calculator.Test.UnitTesting
             result.Should().BeOfType(typeof(NumericToken));
         }
 
+        [TestMethod]
+        public void TestReturnsNumericFromNegativeNumericString()
+        {
+            //arrange 
+            string numeric = "-0.5";
+
+            //act
+            Token result = numeric.ToToken();
+
+            //assert
+            result.Should().BeOfType(typeof(NumericToken));
+        }
 
         [TestMethod]
         [ExpectedException(typeof(NotValidTokenException))]
