@@ -9,7 +9,7 @@ namespace Calculator.Test.UnitTesting
     public class TestCalculatorExtension
     {
         [TestMethod]
-        public void TestReturnsNumericFromNumericChar()
+        public void TestReturnsNumericFromNumericString()
         {
             //arrange 
             string numeric = "5";
@@ -21,10 +21,11 @@ namespace Calculator.Test.UnitTesting
             result.Should().BeOfType(typeof(NumericToken));
         }
 
+        
         [TestMethod]
         [ExpectedException(typeof(NotValidTokenException))]
 
-        public void TestReturnsNullFromNotNumericOrOperator()
+        public void TesteExceptuionNotvalidToken()
         {
             //arrange 
             string numeric = "(";

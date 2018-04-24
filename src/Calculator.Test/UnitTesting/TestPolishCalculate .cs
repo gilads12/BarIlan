@@ -99,7 +99,23 @@ namespace Calculator.Test
             int result = calc.Calculate();
 
             //assert
-            Assert.IsNull(result);
+            calc.Should().BeNull();
         }
+
+        [TestMethod]
+        public void TestNegativResoult()
+        {
+            //arrange 
+            int expected = -3;
+            var calc = new PolishCalculate(new Token[] { new NumericToken(10), new NumericToken(13), new OperatorToken('-') });
+
+            //act
+            int result = calc.Calculate();
+
+            //assert
+            expected.Should().Be(result);
+        }
+        
+
     }
 }

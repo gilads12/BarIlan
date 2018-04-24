@@ -1,6 +1,7 @@
 ﻿using Calculator.Core;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Calculator.Core.Exceptions;
 
 namespace Calculator.Test.IntegrationTest
 {
@@ -67,8 +68,8 @@ namespace Calculator.Test.IntegrationTest
         public void TestMultiAssigmentsCalculationFromJsonRequest()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=3+5" };
-            string result = "8";
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=+3+5" };
+            string result = "15";
 
             //act
             JsonResponse response = request.CalculateNextState();
@@ -90,12 +91,13 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+
         [TestMethod]
         public void TestCalculationWithNagativeNumbersFromJsonRequest()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=3-15" };
-            string result = "-12";
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = @"15+6*2-5-2/5=-3-15" };
+            string result = "-11";
 
             //act
             JsonResponse response = request.CalculateNextState();
@@ -105,6 +107,7 @@ namespace Calculator.Test.IntegrationTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotValidInput))]
         public void TestReturnsNullFromEmptyJsonRequest()
         {
             //arrange 
@@ -112,10 +115,6 @@ namespace Calculator.Test.IntegrationTest
 
             //act
             JsonResponse response = request.CalculateNextState();
-
-            //assert
-            response.Display.Should().Be(default(string));
-            response.CalculatorState.Should().Be(default(string));
         }
 
         [TestMethod]
@@ -145,5 +144,10 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+
+
+       
+
+
     }
 }
