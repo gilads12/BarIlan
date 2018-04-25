@@ -84,7 +84,21 @@ namespace Calculator.Test.UnitTesting
             //assert
             result.Should().Be(false);
         }
-        
+
+        [TestMethod]
+        public void TestGetLaastNumericFromString()
+        {
+            //arrange 
+            string numeric = "1+4.4=";
+            string expected = "4.4";
+
+            //act
+            string result = numeric.GetLastNumeric();
+
+            //assert
+            result.Should().Be(expected);
+        }
+
         //[testmethod]
         //public void testsplitandkeep()
         //{

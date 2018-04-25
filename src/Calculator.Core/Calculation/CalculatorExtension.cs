@@ -9,7 +9,7 @@ namespace Calculator.Core
     public static class CalculatorExtension
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
-        private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+        private static Regex _floatRegex = new Regex(@"^-?\d*\.{0,1}\d+$");
         public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request.CalculatorState.Replace("=","").GetTokensFromString().InfixToPostfix();
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
         public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
