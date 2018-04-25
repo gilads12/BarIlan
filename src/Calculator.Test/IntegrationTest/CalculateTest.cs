@@ -21,7 +21,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestComplexCalculationFromJsonRequest()
         {
@@ -35,7 +34,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestComplexMultCalculationFromJsonRequest()
         {
@@ -49,7 +47,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestAllOperatorsCalculationFromJsonRequest()
         {
@@ -63,7 +60,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestMultiAssigmentsCalculationFromJsonRequest()
         {
@@ -77,7 +73,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestUnfinshedCalculationFromJsonRequest()
         {
@@ -91,7 +86,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestCalculationWithNagativeNumbersFromJsonRequest()
         {
@@ -105,7 +99,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         [ExpectedException(typeof(NotValidInput))]
         public void TestReturnsNullFromEmptyJsonRequest()
@@ -116,7 +109,6 @@ namespace Calculator.Test.IntegrationTest
             //act
             JsonResponse response = request.CalculateNextState();
         }
-
         [TestMethod]
         public void TestReturnsInputFromEmptyJsonRequestState()
         {
@@ -130,7 +122,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestReturnsInputFromNotEmptyJsonRequestState()
         {
@@ -144,9 +135,20 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+        [TestMethod]
+        public void TestDoubleAssiange()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "=", CalculatorState = "1+3=" };
+            string result = "4";// We assume that this is how the calculator should behave!
 
+            //act
+            JsonResponse response = request.CalculateNextState();// we call the GetLastNumeric can create stub but unneccery...
 
-       
+            //assert
+            response.Display.Should().Be(result);
+        }
+
 
 
     }
