@@ -21,32 +21,7 @@ namespace Calculator.Test.UnitTesting
             result.Should().BeOfType(typeof(NumericToken));
         }
 
-        [TestMethod]
-        public void TestReturnsNumericFromFloatNumericString()
-        {
-            //arrange 
-            string numeric = ".5";
-
-            //act
-            Token result = numeric.ToToken();
-
-            //assert
-            result.Should().BeOfType(typeof(NumericToken));
-        }
-
-        [TestMethod]
-        public void TestReturnsNumericFromNegativeNumericString()
-        {
-            //arrange 
-            string numeric = "-0.5";
-
-            //act
-            Token result = numeric.ToToken();
-
-            //assert
-            result.Should().BeOfType(typeof(NumericToken));
-        }
-
+        
         [TestMethod]
         [ExpectedException(typeof(NotValidTokenException))]
 
@@ -84,13 +59,25 @@ namespace Calculator.Test.UnitTesting
             //assert
             result.Should().Be(false);
         }
-
         [TestMethod]
         public void TestGetLaastNumericFromString()
         {
             //arrange 
-            string numeric = "1+4.4=";
+            string numeric = "1+4.4";
             string expected = "4.4";
+
+            //act
+            string result = numeric.GetLastNumeric();
+
+            //assert
+            result.Should().Be(expected);
+        }
+        [TestMethod]
+        public void TestGetLaastNumericFromNegaticeNumber()
+        {
+            //arrange 
+            string numeric = "1+-4.4";
+            string expected = "-4.4";
 
             //act
             string result = numeric.GetLastNumeric();
