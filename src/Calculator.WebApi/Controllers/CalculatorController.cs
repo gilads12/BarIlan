@@ -7,7 +7,7 @@ using System;
 namespace Calculator.WebApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Calculator")]
+    [Route("")]
     public class CalculatorController : Controller
     {
 
