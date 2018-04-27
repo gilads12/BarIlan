@@ -2,9 +2,9 @@
 {
     public class NumericToken : Token
     {
-        public int _value;
+        public float _value;
 
-        public NumericToken(int value)
+        public NumericToken(float value)
         {
             _value = value;
         }
