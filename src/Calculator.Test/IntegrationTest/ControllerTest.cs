@@ -37,7 +37,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -59,7 +59,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -81,7 +81,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -103,7 +103,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
             
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -125,7 +125,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
