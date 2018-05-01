@@ -21,7 +21,7 @@ services:
     image: webdevtoolsandtech/currency-frontend
     ports: ["80"]
     
-  currency-frontend:
+  currency-backend:
     image: webdevtoolsandtech/currency-backend
     ports: ["80"]
     environment:
