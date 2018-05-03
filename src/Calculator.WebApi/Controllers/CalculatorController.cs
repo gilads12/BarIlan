@@ -3,6 +3,7 @@ using Calculator.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace Calculator.WebApi.Controllers
 {
@@ -21,6 +22,15 @@ namespace Calculator.WebApi.Controllers
         [HttpPost("Calculate")]
         public IActionResult Calculate([FromBody]JsonRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    code = 400,
+                    message = ModelState.Values.First().Errors.First().ErrorMessage
+                });
+            }
+
             if (null == request)
                 return new BadRequestResult();
             _logger.LogInformation($"Get calculate request. CalculatorState: {request.CalculatorState}, Input: {request.Input}.");
