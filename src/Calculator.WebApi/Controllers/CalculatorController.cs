@@ -8,7 +8,6 @@ using System.Linq;
 namespace Calculator.WebApi.Controllers
 {
     [Produces("application/json")]
-    [Route("")]
     public class CalculatorController : Controller
     {
 
