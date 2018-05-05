@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-using System.Reflection;
 
 namespace Calculator.WebApi
 {
@@ -32,7 +31,7 @@ namespace Calculator.WebApi
 
             });
           
-            services.AddMvc().AddApplicationPart(Assembly.Load(new AssemblyName("Calculator.WebApi.Controllers"))); ;
+            services.AddMvc();
 
         }
 
@@ -62,6 +61,8 @@ namespace Calculator.WebApi
             });
 
             app.UseMvc();
+            
+
         }
     }
 }
