@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Core
 {
-    public class JsonResponse : JsonState
+    public class JsonResponse 
     {
         public string Display { get; set; }
     }
