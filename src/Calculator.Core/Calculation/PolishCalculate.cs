@@ -5,12 +5,7 @@ using System.Linq;
 namespace Calculator.Core
 {
 
-    public interface ICalculate// needed only for mocking PolishCalculate
-    {
-        float Calculate();
-    }
-
-    public class PolishCalculate:ICalculate
+    public class PolishCalculate
     {
 
         private IEnumerable<Token> m_tokens { get; set; }
