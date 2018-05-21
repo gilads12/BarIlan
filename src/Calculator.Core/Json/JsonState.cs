@@ -2,6 +2,6 @@
 {
     public abstract class JsonState
     {
-        public string CalculatorState { get; set; }
+        public string State { get; set; }
     }
 }

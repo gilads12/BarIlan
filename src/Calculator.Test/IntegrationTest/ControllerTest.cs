@@ -30,7 +30,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
+                State = string.Empty,
                 Input="1"
             };
             var content = JsonConvert.SerializeObject(request);
@@ -52,7 +52,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
+                State = string.Empty,
                 Input = "+"
             };
             var content = JsonConvert.SerializeObject(request);
@@ -74,7 +74,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
+                State = string.Empty,
                 Input = "9+"
             };
             var content = JsonConvert.SerializeObject(request);
@@ -96,7 +96,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState =@"3+7/2+6",
+                State =@"3+7/2+6",
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
@@ -118,7 +118,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = @"3+8/2+6",
+                State = @"3+8/2+6",
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
