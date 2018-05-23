@@ -30,8 +30,8 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                State = string.Empty,
-                Input="1"
+                calculatorState = new CalculatorState { State = string.Empty },
+                Input = "1"
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -52,7 +52,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                State = string.Empty,
+                calculatorState = new CalculatorState { State = string.Empty },
                 Input = "+"
             };
             var content = JsonConvert.SerializeObject(request);
@@ -74,7 +74,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                State = string.Empty,
+                calculatorState = new CalculatorState { State = string.Empty },
                 Input = "9+"
             };
             var content = JsonConvert.SerializeObject(request);
@@ -96,12 +96,12 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                State =@"3+7/2+6",
+                calculatorState = new CalculatorState { State = @"3+7/2+6" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
-            
+
             // Act
             var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
@@ -118,10 +118,11 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                State = @"3+8/2+6",
+                calculatorState = new CalculatorState { State = @"3+8/2+6" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
+            //     content = "{\"calculatorState\":{\"display\":\"5\"},\"input\":\"7\",\"rates\":{}}";
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act

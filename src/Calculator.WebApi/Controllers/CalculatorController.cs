@@ -32,7 +32,7 @@ namespace Calculator.WebApi.Controllers
 
             if (null == request)
                 return new BadRequestResult();
-            _logger.LogInformation($"Get calculate request. CalculatorState: {request.State}, Input: {request.Input}.");
+            _logger.LogInformation($"Get calculate request. CalculatorState: {request.calculatorState.State}, Input: {request.Input}.");
             try
             {
                 return this.Ok(request.CalculateNextState());
