@@ -1,0 +1,6 @@
+version: '3.1'
+
+services:
+ currency-calculator:
+    image: gilads123/currency-calculator
+    ports: ["5001:80"]

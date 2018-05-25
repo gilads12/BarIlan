@@ -2,7 +2,6 @@
 
 namespace Calculator.Core
 {
-    // static class that has no state !!!
     public static class Calculator
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)

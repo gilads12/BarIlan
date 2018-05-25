@@ -20,7 +20,6 @@ namespace Calculator.Test.UnitTesting
             //assert
             result.Should().BeOfType(typeof(NumericToken));
         }
-
         [TestMethod]
         public void TestReturnsNumericFromFloatNumericString()
         {
@@ -33,11 +32,8 @@ namespace Calculator.Test.UnitTesting
             //assert
             result.Should().BeOfType(typeof(NumericToken));
         }
-
-
         [TestMethod]
         [ExpectedException(typeof(NotValidTokenException))]
-
         public void TesteExceptuionNotvalidToken()
         {
             //arrange 
@@ -46,7 +42,6 @@ namespace Calculator.Test.UnitTesting
             //act
             Token result = numeric.ToToken();
         }
-
         [TestMethod]
         public void TestReturnsOperatorFromOperatorChar()
         {
@@ -59,7 +54,6 @@ namespace Calculator.Test.UnitTesting
             //assert
             result.Should().BeOfType(typeof(OperatorToken));
         }
-
         [TestMethod]
         public void TestIsOperatorFromOperatorAndNumeric()
         {
@@ -86,22 +80,5 @@ namespace Calculator.Test.UnitTesting
             result.Should().Be(expected);
         }
 
-        //[testmethod]
-        //public void testsplitandkeep()
-        //{
-        //    //arrange 
-        //    string str = "12+3+5=3=7-5*36";
-        //    privatetype privatetype = new privatetype(typeof(myclass));
-
-
-        //    //act
-        //    privateobject obj = new privateobject(target);
-        //    var retval = obj.invoke("privatemethod");
-        //    assert.areequal(retval, expectedval);
-        //    token result = str.splitandkeep(new char[] { '+', '5' });
-
-        //    //assert
-        //    result.should().beoftype(typeof(operatortoken));
-        //}
     }
 }

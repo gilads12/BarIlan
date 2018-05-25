@@ -14,7 +14,7 @@ namespace Calculator.Test.IntegrationTest
     [TestClass]
     public class ControllerTest
     {
-        private readonly TestServer _server;
+        private readonly TestServer _server;    
         private readonly HttpClient _client;
 
         public ControllerTest()
@@ -135,7 +135,7 @@ namespace Calculator.Test.IntegrationTest
         }
 
         [TestMethod]
-        public async Task TestComplexSumAsync()
+        public async Task TestComplexSumAsync()// todo rename!
         {
             // Arrange
             var request = new JsonRequest

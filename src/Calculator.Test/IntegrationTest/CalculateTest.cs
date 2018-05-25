@@ -170,10 +170,5 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
-
-
-
-
     }
 }

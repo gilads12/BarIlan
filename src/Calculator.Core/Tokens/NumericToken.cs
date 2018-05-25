@@ -2,11 +2,11 @@
 {
     public class NumericToken : Token
     {
-        public float _value;
+        public readonly float value; 
 
         public NumericToken(float value)
         {
-            _value = value;
+            this.value = value;
         }
     }
 }

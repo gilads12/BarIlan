@@ -2,11 +2,11 @@
 {
     public class OperatorToken :Token
     {
-        public char _value;
+        public readonly char value;
 
         public OperatorToken(char value)
         {
-            _value = value;
+            this.value = value;
         }
     }
 }
