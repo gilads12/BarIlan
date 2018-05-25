@@ -35,7 +35,7 @@ namespace Calculator.Test.e2e
                 RedirectStandardOutput = true
             };
 
-            this._process= Process.Start(processInfo);
+            this._process = Process.Start(processInfo);
 
             this._uri = "http://" + this._ip + ":" + this._port + "/calculate";
         }
@@ -53,7 +53,7 @@ namespace Calculator.Test.e2e
             // Arrange
             var request = new JsonRequest
             {
-                calculatorState = new JsonResponse { State = string.Empty },
+                calculatorState=new JsonResponse { },
                 Input = "1"
             };
             JsonResponse response;
@@ -97,11 +97,52 @@ namespace Calculator.Test.e2e
                 response = await SendJsonRequestAsync(request);
                 response.Display.Should().Be("15");
                 //--------------//
+
+                //--------------//
+                request.calculatorState.State = response.State;
+                request.Input = "/";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("15");
+                //--------------//
+
+                //--------------//
+                request.calculatorState.State = response.State;
+                request.Input = "3";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("3");
+                //--------------//
+
+                //--------------//
+                request.calculatorState.State = response.State;
+                request.Input = "-";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("3");
+                //--------------//
+
+                //--------------//
+                request.calculatorState.State = response.State;
+                request.Input = "10";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("10");
+                //--------------//
+
+                //--------------//
+                request.calculatorState.State = response.State;
+                request.Input = "=";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-5");
+                //--------------//
+                
             }
 
-            catch (Exception e)
+            catch
             {
-                string message = e.Message;
+                throw;
             }
         }
 

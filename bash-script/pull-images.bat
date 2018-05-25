@@ -1,5 +1,5 @@
 
-docker pull "gilads123/calculatorwebapi:v1.0.3"
+docker pull "gilads123/calculatorwebapi:v1.0.4"
 docker pull "webdevtoolsandtech/currency-backend"
 docker pull "webdevtoolsandtech/currency-frontend"
 docker pull "webdevtoolsandtech/user-service"

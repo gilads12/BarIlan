@@ -30,7 +30,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                calculatorState = new JsonResponse { State = string.Empty },
+               // calculatorState = new JsonResponse { State = string.Empty },
                 Input = "1"
             };
             var content = JsonConvert.SerializeObject(request);
