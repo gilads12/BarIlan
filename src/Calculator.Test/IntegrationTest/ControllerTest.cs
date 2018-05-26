@@ -36,7 +36,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -57,7 +57,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -78,7 +78,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -99,7 +99,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -120,7 +120,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -141,13 +141,13 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
-            jsonResponse.Display.Should().Be("0");
+            jsonResponse.Display.Should().Be("8");
         }
         [TestMethod]
         public async Task TestNegativeResultAsync()
@@ -162,7 +162,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -184,7 +184,7 @@ namespace Calculator.Test.IntegrationTest
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);
 
             // Assert
             response.EnsureSuccessStatusCode();

@@ -2,6 +2,7 @@
 using Calculator.Core.Exceptions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Calculator.Test.UnitTesting
 {
@@ -78,6 +79,19 @@ namespace Calculator.Test.UnitTesting
 
             //assert
             result.Should().Be(expected);
+        }
+        [TestMethod]
+        public void TestGetTokenFromNegativeNumver()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { calculatorState = new JsonResponse { State = "-3+8--1" } };
+            IEnumerable<Token> expected = new List<Token> { new NumericToken(-3), new OperatorToken('+'), new NumericToken(8), new OperatorToken('-'), new NumericToken(-1) };
+
+            //act
+            var result = request.GetTokensFromJsonRequest();
+
+            //assert
+            result.Should().BeEquivalentTo(expected, options => options.WithStrictOrdering());
         }
 
     }
