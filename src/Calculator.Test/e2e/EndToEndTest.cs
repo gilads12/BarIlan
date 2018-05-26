@@ -36,12 +36,20 @@ namespace Calculator.Test.e2e
             DockerComposeDown(this._dockerPath);
         }
 
-
         [TestMethod]
-        public async Task TestAsync()
+        public void TestWithRetry()
         {
-            //todo add retry policy.... with polly and timer increse between each exc....
+            // we need retry becuase this test has external dependencies (maybe the docker-compose not finish his init before our test)
+            // every try we wait a litle more for the docker-compose up....
+            Policy.Handle<Exception>().
+                           WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
+                           .ExecuteAsync(TestAsync)
+                           .GetAwaiter()
+                           .GetResult();
+        }
 
+        private async Task TestAsync()
+        {
             // Arrange
             var request = new JsonRequest
             {
