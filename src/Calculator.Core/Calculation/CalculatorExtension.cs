@@ -10,7 +10,7 @@ namespace Calculator.Core
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
         private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
-        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.Replace("=", "")?.GetTokensFromString().InfixToPostfix();
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().ReplaceMinusToPluse().InfixToPostfix();
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
         public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
         public static Token ToToken(this string str)
@@ -69,13 +69,50 @@ namespace Calculator.Core
 
             return postfix;
         }
+        private static string PreProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
+        private static IEnumerable<Token> PostProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
+
         private static IEnumerable<Token> GetTokensFromString(this string str)
         {
+            if (str[0] == '-')
+                str = '0' + str;
             foreach (var s in str.SplitAndKeep(new[] { '*', '/', '+', '-', '=' }))
             {
                 yield return s.ToToken();
             }
         }
+        private static IEnumerable<Token> ReplaceMinusToPluse(this IEnumerable<Token> tokens)
+        {
+            IEnumerator<Token> enumerator = tokens.GetEnumerator();
+            bool flag = false;
 
+            while (enumerator.MoveNext())
+            {
+                Token token = enumerator.Current;
+                switch (token)
+                {
+                    case NumericToken n:
+                        if (!flag)
+                            yield return n;
+                        else
+                        {
+                            flag = false;
+                            yield return new NumericToken(n.value * -1);
+                        }
+                        break;
+                    case OperatorToken o:
+                        if (o.value == '-')
+                        {
+                            yield return new OperatorToken('+');
+                            flag = true;
+                        }
+                        else
+                            yield return o;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

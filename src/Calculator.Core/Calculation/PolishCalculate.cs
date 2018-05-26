@@ -16,6 +16,7 @@ namespace Calculator.Core
         {
             if (!this.m_tokens.Any())
                 throw new NoTokensException();
+
             Stack<float> stack = new Stack<float>();
 
             foreach (var token in this.m_tokens)
@@ -38,7 +39,7 @@ namespace Calculator.Core
                 switch (((OperatorToken)token).value)
                 {
                     case '-':
-                        stack.Push(right  - left);
+                        stack.Push(right - left);
                         break;
                     case '+':
                         stack.Push(right + left);
