@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,40 +21,30 @@ namespace Calculator.Test.e2e
         private string _uri;
         private readonly int _port = 5001; //todo fix hard coded!!
         private readonly string _dockerPath = @"C:\Users\gilad\BarIlan\src\Calculator.Test\e2e\docker-compose.yml";//todo fix relative path 
-        private Process _process;
 
         [TestInitialize]
         public void SetUp()
         {
             this._ip = GetDockerMachineIp();
-            var processInfo = new ProcessStartInfo()
-            {
-                FileName = "cmd.exe",
-                Arguments = "/C docker-compose -f " + this._dockerPath + " up ",
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
-
-            this._process = Process.Start(processInfo);
-
+            DockerComposeUp(this._dockerPath);
             this._uri = "http://" + this._ip + ":" + this._port + "/calculate";
         }
         [TestCleanup]
         public void Dispose()
         {
             this._client.Dispose();
-            this._process.Close();
+            DockerComposeDown(this._dockerPath);
         }
 
 
         [TestMethod]
         public async Task TestAsync()
         {
+            //todo add retry policy.... with polly and timer increse between each exc....
+
             // Arrange
             var request = new JsonRequest
             {
-                calculatorState=new JsonResponse { },
                 Input = "1"
             };
             JsonResponse response;
@@ -67,7 +58,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "2";
 
                 response = await SendJsonRequestAsync(request);
@@ -75,7 +66,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "+";
 
                 response = await SendJsonRequestAsync(request);
@@ -83,7 +74,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "3";
 
                 response = await SendJsonRequestAsync(request);
@@ -91,7 +82,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "=";
 
                 response = await SendJsonRequestAsync(request);
@@ -99,7 +90,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "/";
 
                 response = await SendJsonRequestAsync(request);
@@ -107,7 +98,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "3";
 
                 response = await SendJsonRequestAsync(request);
@@ -115,7 +106,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "-";
 
                 response = await SendJsonRequestAsync(request);
@@ -123,7 +114,7 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "10";
 
                 response = await SendJsonRequestAsync(request);
@@ -131,13 +122,13 @@ namespace Calculator.Test.e2e
                 //--------------//
 
                 //--------------//
-                request.calculatorState.State = response.State;
+                request.calculatorState = response;
                 request.Input = "=";
 
                 response = await SendJsonRequestAsync(request);
                 response.Display.Should().Be("-5");
                 //--------------//
-                
+
             }
 
             catch
@@ -175,6 +166,32 @@ namespace Calculator.Test.e2e
 
             proc.Close();
             return line.Replace("\n", "");
+        }
+        private void DockerComposeUp(string dockerComposePath)
+        {
+            var processInfo = new ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                Arguments = "/C docker-compose -f " + dockerComposePath + " up ",
+                UseShellExecute = false,
+                RedirectStandardError = false,
+                RedirectStandardOutput = false
+            };
+
+            Process.Start(processInfo).Close();
+        }
+        private void DockerComposeDown(string dockerComposePath)
+        {
+            var processInfo = new ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                Arguments = "/C docker-compose -f " + dockerComposePath + " down ",
+                UseShellExecute = false,
+                RedirectStandardError = false,
+                RedirectStandardOutput = false
+            };
+
+            Process.Start(processInfo).Close();
         }
     }
 }
