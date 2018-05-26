@@ -2,7 +2,6 @@
 
 namespace Calculator.Core
 {
-    // static class that has no state !!!
     public static class Calculator
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)
@@ -10,22 +9,22 @@ namespace Calculator.Core
             if (!request.IsInputValid())
                 throw new NotValidInput(request.Input);
 
-            if (request.CalculatorState == default(string))
+            if (request.calculatorState?.State == default(string))
                 if (request.Input != default(string) && request.Input.IsOperator())
                     throw new NotValidInput(request.Input);
-                else return new JsonResponse { CalculatorState = request.Input, Display = request.Input };
+                else return new JsonResponse { Display = request.Input, State = request.Input };
 
             if (request.Input == "=")
             {
                 var tokens = request.GetTokensFromJsonRequest();
-                return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = new PolishCalculate(tokens).Calculate().ToString() };
+                return new JsonResponse { State = new PolishCalculate(tokens).Calculate().ToString(), Display = new PolishCalculate(tokens).Calculate().ToString() };
             }
 
             else
             {
                 if (request.Input.IsOperator())
-                    return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric() };
-                else return new JsonResponse { CalculatorState = request.CalculatorState + request.Input, Display = request.GetLastNumeric() + request.Input };
+                    return new JsonResponse { State = request.calculatorState.State + request.Input, Display = request.calculatorState.State.GetLastNumeric() };
+                else return new JsonResponse { State = request.calculatorState.State + request.Input, Display = request.calculatorState.State.GetLastNumeric() + request.Input };
             }
         }
     }

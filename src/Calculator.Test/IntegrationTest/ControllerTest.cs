@@ -14,7 +14,7 @@ namespace Calculator.Test.IntegrationTest
     [TestClass]
     public class ControllerTest
     {
-        private readonly TestServer _server;
+        private readonly TestServer _server;    
         private readonly HttpClient _client;
 
         public ControllerTest()
@@ -30,14 +30,13 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
-                Input="1"
+                Input = "1"
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -51,14 +50,14 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
+                calculatorState = new JsonResponse { State = string.Empty },
                 Input = "+"
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -72,14 +71,14 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = string.Empty,
+                calculatorState = new JsonResponse { State = string.Empty },
                 Input = "9+"
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -93,14 +92,14 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState =@"3+7/2+6",
+                calculatorState = new JsonResponse { State = @"3+7/2+6" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
-            
+
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -114,14 +113,14 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = @"3+8/2+6",
+                calculatorState = new JsonResponse { State = @"3+8/2+6" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PostAsync("/api/Calculator/Calculate", stringContent);//tbc
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
 
             // Assert
             response.EnsureSuccessStatusCode();
@@ -172,5 +171,28 @@ namespace Calculator.Test.IntegrationTest
             jsonResponse.Display.Should().Be("-4");
         }
 
+        [TestMethod]
+        public async Task TestComplexSumAsync()// todo rename!
+        {
+            // Arrange
+            var request = new JsonRequest
+            {
+                calculatorState = new JsonResponse { State = @"3+6=+3" },
+                Input = "="
+            };
+            var content = JsonConvert.SerializeObject(request);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/calculate", stringContent);//tbc
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
+            jsonResponse.Display.Should().Be("12");
+        }
+
+      
     }
 }
