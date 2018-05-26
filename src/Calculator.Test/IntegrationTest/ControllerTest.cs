@@ -134,7 +134,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = @"-3+8/5+6--1",
+                calculatorState=new JsonResponse {State= @"-3+8/5+6--1" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
@@ -155,7 +155,7 @@ namespace Calculator.Test.IntegrationTest
             // Arrange
             var request = new JsonRequest
             {
-                CalculatorState = @"2+8/5-6",
+                calculatorState= new JsonResponse { State= @"2+8/5-6" },
                 Input = "="
             };
             var content = JsonConvert.SerializeObject(request);
