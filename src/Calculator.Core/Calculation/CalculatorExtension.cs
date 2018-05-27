@@ -10,7 +10,12 @@ namespace Calculator.Core
     {
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
         private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
-        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().ReplaceMinusToPluse().InfixToPostfix();
+
+        public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
+        public static string GetLastNumeric(this JsonRequest state) => GetLastNumeric(state.calculatorState.State);
+        public static string GetLastNumeric(this string state) => state?.Split('-', '+', '*', '/', '=').LastOrDefault().EmptyToNull();
+        public static string EmptyToNull(this string str) => str == string.Empty ? null : str;
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().PostProcessingTokens();
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
         public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
         public static Token ToToken(this string str)
@@ -21,8 +26,7 @@ namespace Calculator.Core
                 return new OperatorToken(str[0]);
             throw new NotValidTokenException(str);
         }
-
-        private static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
+        public static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
             int start = 0, index;
 
@@ -39,7 +43,7 @@ namespace Calculator.Core
                 yield return s.Substring(start);
             }
         }
-        private static IEnumerable<Token> InfixToPostfix(this IEnumerable<Token> infixTokens)
+        public static IEnumerable<Token> InfixToPostfix(this IEnumerable<Token> infixTokens)
         {
             var stack = new Stack<Token>();
             var postfix = new Stack<Token>();
@@ -69,13 +73,11 @@ namespace Calculator.Core
 
             return postfix;
         }
-        private static string PreProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
-        private static IEnumerable<Token> PostProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
 
+        private static string PreProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
+        private static IEnumerable<Token> PostProcessingTokens(this IEnumerable<Token> token) => token.ReplaceMinusToPluse().InfixToPostfix();
         private static IEnumerable<Token> GetTokensFromString(this string str)
         {
-            if (str[0] == '-')
-                str = '0' + str;
             foreach (var s in str.SplitAndKeep(new[] { '*', '/', '+', '-', '=' }))
             {
                 yield return s.ToToken();
@@ -85,6 +87,21 @@ namespace Calculator.Core
         {
             IEnumerator<Token> enumerator = tokens.GetEnumerator();
             bool flag = false;
+
+            enumerator.MoveNext();
+            switch (enumerator.Current)
+            {
+                case NumericToken n:
+                    yield return n;
+                    break;
+                case OperatorToken o:
+                    if (o.value == '-')
+                        flag = true;
+                    else yield return o;
+                    break;
+                default:
+                    break;
+            }
 
             while (enumerator.MoveNext())
             {

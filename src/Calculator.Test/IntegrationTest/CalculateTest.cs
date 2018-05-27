@@ -48,20 +48,7 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-        [TestMethod]
-        public void TestComplexCalculationFromJsonRequest()
-        {
-            //arrange 
-            JsonRequest request = new JsonRequest { Input = "=", calculatorState=new JsonResponse { State = @"15+6-2" } };
-            string result = "19";
-
-            //act
-            JsonResponse response = request.CalculateNextState();
-
-            //assert
-            response.Display.Should().Be(result);
-        }
-
+  
         [TestMethod]
         public void TestComplexMultCalculationFromJsonRequest()
         {
@@ -165,7 +152,7 @@ namespace Calculator.Test.IntegrationTest
             string result = "15";
 
             //act
-            JsonResponse response = request.CalculateNextState();// we call the GetLastNumeric can create stub but unneccery...
+            JsonResponse response = request.CalculateNextState();
 
             //assert
             response.Display.Should().Be(result);
