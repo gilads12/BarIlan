@@ -1,6 +1,10 @@
-version: '3.1'
+version: '3.4'
 
 services:
- currency-calculator:
-    image: gilads123/currency-calculator
-    ports: ["5001:80"]
+  calculator.webapi:
+    image: calculatorwebapi${TAG}
+    build:
+      context: ../../..
+      dockerfile: ./src/Calculator.WebApi/Dockerfile
+    ports:
+      - "5001:80"

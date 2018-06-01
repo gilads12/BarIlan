@@ -1,8 +1,10 @@
-version: '3.1'
+version: '3.4'
 
 services:
   calculator.webapi:
-    image: calculatorwebapi:1.0.3
+    image: ${DOCKER_REGISTRY}calculatorwebapi
     build:
       context: .
       dockerfile: src/Calculator.WebApi/Dockerfile
+     ports:
+      - "5001:80"

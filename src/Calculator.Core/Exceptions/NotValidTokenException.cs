@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Calculator.Core.Exceptions
+﻿namespace Calculator.Core.Exceptions
 {
     public class NotValidTokenException : GlobalException
     {

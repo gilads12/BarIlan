@@ -1,12 +1,9 @@
 ﻿using Calculator.Core;
 using FluentAssertions;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Polly;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,33 +11,23 @@ using System.Threading.Tasks;
 namespace Calculator.Test.e2e
 {
     [TestClass]
-    public class EndToEndTest
+    public class EndToEndTest : IDisposable
     {
         private readonly HttpClient _client = new HttpClient();
-        private string _ip;
+        private ContainerManager _container;
         private string _uri;
-        private readonly int _port = 5001; //todo fix hard coded!!
-        private readonly string _dockerPath = @"C:\Users\gilad\BarIlan\src\Calculator.Test\e2e\docker-compose.yml";//todo fix relative path 
 
         [TestInitialize]
         public void SetUp()
         {
-            this._ip = GetDockerMachineIp();
-            DockerComposeUp(this._dockerPath);
-            this._uri = "http://" + this._ip + ":" + this._port + "/calculate";
-        }
-        [TestCleanup]
-        public void Dispose()
-        {
-            this._client.Dispose();
-            DockerComposeDown(this._dockerPath);
+            _container = new ContainerManager(@"../../../e2e/docker-compose.yml", "5001","test");
+            _container.Init();
+            this._uri = _container.Url + "/calculate";
         }
 
         [TestMethod]
         public void TestWithRetry()
         {
-            // we need retry becuase this test has external dependencies (maybe the docker-compose not finish his init before our test)
-            // every try we wait a litle more for the docker-compose up....
             Policy.Handle<Exception>().
                            WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
                            .ExecuteAsync(TestAsync)
@@ -144,8 +131,6 @@ namespace Calculator.Test.e2e
                 throw;
             }
         }
-
-
         private async Task<JsonResponse> SendJsonRequestAsync(JsonRequest request)
         {
             var content = JsonConvert.SerializeObject(request);
@@ -157,49 +142,12 @@ namespace Calculator.Test.e2e
             var responseString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<JsonResponse>(responseString);
         }
-        private string GetDockerMachineIp()
+
+        public void Dispose()
         {
-            var processInfo = new ProcessStartInfo()
-            {
-                FileName = "cmd.exe",
-                Arguments = "/C docker-machine ip",
-                UseShellExecute = false,
-                RedirectStandardError = false,
-                RedirectStandardOutput = true
-            };
-
-            var proc = Process.Start(processInfo);
-            proc.WaitForExit();
-            string line = proc.StandardOutput.ReadToEnd();
-
-            proc.Close();
-            return line.Replace("\n", "");
-        }
-        private void DockerComposeUp(string dockerComposePath)
-        {
-            var processInfo = new ProcessStartInfo()
-            {
-                FileName = "cmd.exe",
-                Arguments = "/C docker-compose -f " + dockerComposePath + " up ",
-                UseShellExecute = false,
-                RedirectStandardError = false,
-                RedirectStandardOutput = false
-            };
-
-            Process.Start(processInfo).Close();
-        }
-        private void DockerComposeDown(string dockerComposePath)
-        {
-            var processInfo = new ProcessStartInfo()
-            {
-                FileName = "cmd.exe",
-                Arguments = "/C docker-compose -f " + dockerComposePath + " down ",
-                UseShellExecute = false,
-                RedirectStandardError = false,
-                RedirectStandardOutput = false
-            };
-
-            Process.Start(processInfo).Close();
+            this._client.Dispose();
+            this._container.Dispose();
         }
     }
+
 }

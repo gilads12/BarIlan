@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace Calculator.Core.Exceptions
+﻿namespace Calculator.Core.Exceptions
 {
 
     public class NotValidInput : GlobalException

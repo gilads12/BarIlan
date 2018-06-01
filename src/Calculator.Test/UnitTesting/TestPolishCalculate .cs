@@ -2,7 +2,6 @@ using Calculator.Core;
 using Calculator.Core.Exceptions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Calculator.Test
 {

@@ -2,7 +2,6 @@
 using Calculator.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 
 namespace Calculator.WebApi.Controllers
