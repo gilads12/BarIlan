@@ -39,7 +39,7 @@ namespace Calculator.WebApi.Controllers
             catch (GlobalException e)
             {
                 _logger.LogError(e.ErrorMessage);
-                return this.Ok(new JsonResponse { Display = default(string) });
+                return this.Ok(new JsonResponse { Display = "0" });
             }
         }
     }

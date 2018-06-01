@@ -84,7 +84,7 @@ namespace Calculator.Test.IntegrationTest
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
-            jsonResponse.Display.Should().Be(default(string));
+            jsonResponse.Display.Should().Be("0");
         }
         [TestMethod]
         public async Task TestComplexSumAndMultRteurnResoultAsync()
@@ -210,7 +210,7 @@ namespace Calculator.Test.IntegrationTest
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
-            jsonResponse.Display.Should().BeNull();//todo: does it realy should be null?
+            jsonResponse.Display.Should().Be("0");
         }
         [TestMethod]
         public async Task TestCalculateInvalidOperatorStateAsync()
@@ -231,7 +231,7 @@ namespace Calculator.Test.IntegrationTest
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
-            jsonResponse.Display.Should().BeNull();//todo: does it realy should be null?
+            jsonResponse.Display.Should().Be("0");
         }
         [TestMethod]
         public async Task TestCalculateEmptyStateAsync()
@@ -251,7 +251,7 @@ namespace Calculator.Test.IntegrationTest
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var jsonResponse = JsonConvert.DeserializeObject<JsonResponse>(responseString);
-            jsonResponse.Display.Should().BeNull();//todo: does it realy should be null?
+            jsonResponse.Display.Should().Be("0");
         }
     }
 }
