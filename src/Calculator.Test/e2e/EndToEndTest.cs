@@ -20,7 +20,7 @@ namespace Calculator.Test.e2e
         [TestInitialize]
         public void SetUp()
         {
-            _container = new ContainerManager(@"../../../e2e/docker-compose.yml", "5001","test");
+            _container = new ContainerManager(@"../../../e2e/docker-compose.yml", "5001", "test");
             _container.Init();
             this._uri = _container.Url + "/calculate";
         }
@@ -38,16 +38,21 @@ namespace Calculator.Test.e2e
         private async Task TestAsync()
         {
             // Arrange
-            var request = new JsonRequest
-            {
-                Input = "1"
-            };
+            var request = new JsonRequest { };
             JsonResponse response;
 
             //testing
             //--------------//
             try
             {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("0");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "1";
+
                 response = await SendJsonRequestAsync(request);
                 response.Display.Should().Be("1");
                 //--------------//

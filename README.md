@@ -3,9 +3,12 @@ Bar ilan advance web
 
 
 todo
-1. write readme 
-2. code review 
-3. build stable image as latest tag
+1. write readme
+2. add configuration to choose port and broswer
+3. remove System.io (get chrome driver) 
+4. cleanup the e2e test  
+5. code review 
+6. build stable image as latest tag
 
 
 (the current image is calculatorwebapi:v1.0.4)

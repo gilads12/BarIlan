@@ -2,7 +2,7 @@
 using Polly;
 using System;
 using System.Diagnostics;
-using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Calculator.Test.e2e
@@ -17,13 +17,13 @@ namespace Calculator.Test.e2e
     {
         private readonly string _port;
         private readonly string _dockerComposeFullPath;
-        private readonly  string _tag;
+        private readonly string _tag;
         private string _machineIp;
 
 
         public string Url { get; private set; }
 
-        public ContainerManager(string dockerComposeFullPath, string port,string tag)
+        public ContainerManager(string dockerComposeFullPath, string port, string tag)
         {
             this._dockerComposeFullPath = dockerComposeFullPath;
             this._port = port;
@@ -36,7 +36,7 @@ namespace Calculator.Test.e2e
             DockerComposeUp();
             this.Url = "http://" + this._machineIp + ":" + this._port;
 
-            var started = WaitForService().Result;
+            var started = WaitForImage().Result;
 
             if (!started)
             {
@@ -44,19 +44,15 @@ namespace Calculator.Test.e2e
             }
         }
 
-        private async Task<bool> WaitForService()
+        private async Task<bool> WaitForImage()
         {
-            using (var client = new HttpClient() { Timeout = TimeSpan.FromSeconds(1) })
+            using (var client = new WebClient())
             {
                 var result = Policy.Handle<Exception>().
                            WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
                            .ExecuteAsync(async () =>
                            {
-                               var response = await client.GetAsync(new Uri(this.Url)).ConfigureAwait(false);
-                               if (!response.IsSuccessStatusCode)
-                               {
-                                   throw new Exception();
-                               }
+                               string HTMLSource = await client.DownloadStringTaskAsync(new Uri(this.Url));
                                return true;
                            })
                            .GetAwaiter()
@@ -64,7 +60,6 @@ namespace Calculator.Test.e2e
                 return result;
             }
         }
-
         private string GetDockerMachineIp()
         {
             var processInfo = new ProcessStartInfo()
@@ -85,7 +80,7 @@ namespace Calculator.Test.e2e
         {
             var processInfo = new ProcessStartInfo()
             {
-                FileName = "docker-compose",    
+                FileName = "docker-compose",
                 Arguments =
                 $"-f {this._dockerComposeFullPath} build"
             };

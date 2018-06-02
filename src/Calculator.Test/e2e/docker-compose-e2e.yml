@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  
+  currency-calculator:
+    image: gilads123/currency-calculator
+    ports: ["80"]
+   
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports: ["6379"]
+  
+  user-service:
+    image: webdevtoolsandtech/user-service
+    ports: ["80"]
+    environment:
+      REDIS_ADDRESS: 'redis:6379'
+
+  currency-frontend:
+    image: webdevtoolsandtech/currency-frontend
+    ports: ["80"]
+    
+  currency-backend:
+    image: webdevtoolsandtech/currency-backend
+    ports: ["5002:80"]
+    environment:
+      REDIS_ADDRESS: 'redis:6379'
+      SESSION_SECRET: 'shmuelandgilad'
+      USER_SERVICE_ADDRESS: 'user-service'
+      FRONTEND_ADDRESS: 'currency-frontend'
+      CALCULATOR_ADDRESS: 'currency-calculator'

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.WebApi", "src\Ca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Test", "src\Calculator.Test\Calculator.Test.csproj", "{8B00F54C-12B2-46AC-809A-2CF034D7801E}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D308B00A-4250-48A7-87F9-70B1234DD189}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{8B00F54C-12B2-46AC-809A-2CF034D7801E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B00F54C-12B2-46AC-809A-2CF034D7801E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B00F54C-12B2-46AC-809A-2CF034D7801E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D308B00A-4250-48A7-87F9-70B1234DD189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D308B00A-4250-48A7-87F9-70B1234DD189}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D308B00A-4250-48A7-87F9-70B1234DD189}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D308B00A-4250-48A7-87F9-70B1234DD189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
