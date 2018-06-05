@@ -34,7 +34,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestFloatDivCalculationFromJsonRequest()
         {
@@ -48,7 +47,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-  
         [TestMethod]
         public void TestComplexMultCalculationFromJsonRequest()
         {
@@ -62,7 +60,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestAllOperatorsCalculationFromJsonRequest()
         {
@@ -76,7 +73,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestMultiAssigmentsCalculationFromJsonRequest()
         {
@@ -90,7 +86,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestUnfinshedCalculationFromJsonRequest()
         {
@@ -104,7 +99,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestCalculationWithNagativeNumbersFromJsonRequest()
         {
@@ -118,7 +112,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         [ExpectedException(typeof(NotValidInput))]
         public void TestReturnsNullFromEmptyJsonRequest()
@@ -129,7 +122,6 @@ namespace Calculator.Test.IntegrationTest
             //act
             JsonResponse response = request.CalculateNextState();
         }
-
         [TestMethod]
         public void TestReturnsInputFromEmptyJsonRequestState()
         {
@@ -143,7 +135,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
-
         [TestMethod]
         public void TestReturnsInputFromNotEmptyJsonRequestState()
         {

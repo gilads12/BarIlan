@@ -17,7 +17,7 @@ namespace Calculator.Test.e2e
         [TestInitialize]
         public void SetUp()
         {
-            _container = new ContainerManager(@"../../../e2e/docker-compose-e2e.yml", "5002", "test");
+            _container = new ContainerManager(@"../../../e2e/docker-compose-e2e.yml", "5002", "latest");
             _container.Init();
             this._url = _container.Url;
         }
@@ -43,23 +43,26 @@ namespace Calculator.Test.e2e
                 signupBtn.Submit();
 
                 var oneDig = driver.FindElementByClassName("digit-1");
+                var fiveDig = driver.FindElementByClassName("digit-5");
                 var SevenDig = driver.FindElementByClassName("digit-7");
                 var subtract = driver.FindElementByClassName("operator-subtract");
-                var equeal = driver.FindElementByClassName("operator-equals");
+                var plus = driver.FindElementByClassName("operator-plus");
+                var equal = driver.FindElementByClassName("operator-equals");
 
 
                 oneDig.Click();
                 oneDig.Click();
-
                 subtract.Click();
-
                 SevenDig.Click();
-
-                equeal.Click();
-
+                equal.Click();
                 var display = driver.FindElementByClassName("display");
 
-                display.Text.Should().Be("4");
+                plus.Click();
+                fiveDig.Click();
+                subtract.Click();
+                oneDig.Click();
+                equal.Click();
+                display.Text.Should().Be("8");
             }
         }
 
