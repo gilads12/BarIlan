@@ -1,0 +1,135 @@
+﻿using Calculator.Core.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Text.RegularExpressions;
+
+namespace Calculator.Core
+{
+    public static class CalculatorExtension
+    {
+        private static Regex _operatorRegex = new Regex(@"[+-/*=]");
+        private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+
+        public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
+        public static string GetLastNumeric(this JsonRequest state) => GetLastNumeric(state.calculatorState.State);
+        public static string GetLastNumeric(this string state) => state?.Split('-', '+', '*', '/', '=').LastOrDefault().EmptyToNull();
+        public static string EmptyToNull(this string str) => str == string.Empty ? null : str;
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().PostProcessingTokens();
+        public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
+        public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
+        public static Token ToToken(this string str)
+        {
+            if (str.IsFloatNumber())
+                return new NumericToken(float.Parse(str));
+            if (str.IsOperator())
+                return new OperatorToken(str[0]);
+            throw new NotValidTokenException(str);
+        }
+        public static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
+        {
+            int start = 0, index;
+
+            while ((index = s.IndexOfAny(delims, start)) != -1)
+            {
+                if (index - start > 0)
+                    yield return s.Substring(start, index - start);
+                yield return s.Substring(index, 1);
+                start = index + 1;
+            }
+
+            if (start < s.Length)
+            {
+                yield return s.Substring(start);
+            }
+        }
+        public static IEnumerable<Token> InfixToPostfix(this IEnumerable<Token> infixTokens)
+        {
+            var stack = new Stack<Token>();
+            var postfix = new Stack<Token>();
+
+            foreach (var token in infixTokens)
+            {
+                if (token is OperatorToken)
+                {
+                    postfix.Push(token);
+                }
+                else
+                {
+                    if (postfix.Count > 0)
+                    {
+                        stack.Push(token);
+                        while (postfix.Count > 0)
+                            stack.Push(postfix.Pop());
+                    }
+                    else stack.Push(token);
+                }
+            }
+
+            while (stack.Count > 0)
+            {
+                postfix.Push(stack.Pop());
+            }
+
+            return postfix;
+        }
+
+        private static string PreProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
+        private static IEnumerable<Token> PostProcessingTokens(this IEnumerable<Token> token) => token.ReplaceMinusToPluse().InfixToPostfix();
+        private static IEnumerable<Token> GetTokensFromString(this string str)
+        {
+            foreach (var s in str.SplitAndKeep(new[] { '*', '/', '+', '-', '=' }))
+            {
+                yield return s.ToToken();
+            }
+        }
+        private static IEnumerable<Token> ReplaceMinusToPluse(this IEnumerable<Token> tokens)
+        {
+            IEnumerator<Token> enumerator = tokens.GetEnumerator();
+            bool flag = false;
+
+            enumerator.MoveNext();
+            switch (enumerator.Current)
+            {
+                case NumericToken n:
+                    yield return n;
+                    break;
+                case OperatorToken o:
+                    if (o.value == '-')
+                        flag = true;
+                    else yield return o;
+                    break;
+                default:
+                    break;
+            }
+
+            while (enumerator.MoveNext())
+            {
+                Token token = enumerator.Current;
+                switch (token)
+                {
+                    case NumericToken n:
+                        if (!flag)
+                            yield return n;
+                        else
+                        {
+                            flag = false;
+                            yield return new NumericToken(n.value * -1);
+                        }
+                        break;
+                    case OperatorToken o:
+                        if (o.value == '-')
+                        {
+                            yield return new OperatorToken('+');
+                            flag = true;
+                        }
+                        else
+                            yield return o;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
