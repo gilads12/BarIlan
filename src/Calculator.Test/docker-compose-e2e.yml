@@ -23,10 +23,11 @@ services:
     
   currency-backend:
     image: webdevtoolsandtech/currency-backend:${TAG}
-    ports: ["5002:80"]
+    ports:
+        - "${ExternalPort}:80"
     environment:
       REDIS_ADDRESS: 'redis:6379'
-      SESSION_SECRET: 'shmuelandgilad'
+      SESSION_SECRET: 'shmuelandgiladandshani'
       USER_SERVICE_ADDRESS: 'user-service'
       FRONTEND_ADDRESS: 'currency-frontend'
       CALCULATOR_ADDRESS: 'currency-calculator'

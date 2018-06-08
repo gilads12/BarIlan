@@ -7,15 +7,6 @@ using System.Threading.Tasks;
 
 namespace Calculator.Test.e2e
 {
-    public class DockerSettings
-    {
-        public string Ip { get; } = ContainerManager.GetDockerMachineIp();
-        public string Tag { get; set; } = "latest";
-        public string MachineName { get; } = Environment.MachineName;
-        public string ExternalPort { get; set; } = "5002";
-        public string DockerComposePath { get; set; } = @"../../../e2e/docker-compose-e2e.yml";
-        public string Url => "http://" + Ip + ":" + ExternalPort;
-    }
 
     // we didn't found any framework in c# that handle docker-compose so we write this litle manager to run our end-to-end test
     // the build method will build the docker image and give the image a tag so this method will take a while (abuot a minute)
@@ -25,16 +16,16 @@ namespace Calculator.Test.e2e
 
     public static class ContainerManager
     {
-        public static void DockerComposePull(this DockerSettings variables)
+        public static void DockerComposePull(this DockerSettings settings)
         {
             var processInfo = new ProcessStartInfo()
             {
                 FileName = "docker-compose",
                 Arguments =
-                $"-f {variables.DockerComposePath} pull"
+                $"-f {settings.DockerComposePath} pull"
             };
 
-            AddEnvironmentVariables(processInfo, variables);
+            AddEnvironmentVariables(processInfo, settings);
             var process = Process.Start(processInfo);
 
             process.WaitForExit();
@@ -133,6 +124,8 @@ namespace Calculator.Test.e2e
         {
             processStartInfo.Environment["TAG"] = variables.Tag;
             processStartInfo.Environment["COMPUTERNAME"] = variables.MachineName;
+            processStartInfo.Environment["ExternalPort"] = variables.ExternalPort;
+
         }
 
 

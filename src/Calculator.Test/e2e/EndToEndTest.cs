@@ -4,42 +4,46 @@ using OpenQA.Selenium.Chrome;
 using FluentAssertions;
 using Polly;
 using System.IO;
-using System.ComponentModel;
 using OpenQA.Selenium;
+using ServiceStack;
+using Microsoft.Extensions.Configuration;
+using Calculator.Test.common;
+using System.ComponentModel;
 
 namespace Calculator.Test.e2e
 {
+    [TestCategory("E2E")]
     [TestClass]
     public class EndToEndTest : IDisposable
     {
-        private readonly DockerSettings _settings = new DockerSettings();
-
+        private DockerSettings _setting;
 
         [TestInitialize]
         public void SetUp()
         {
-            //this._settings.DockerComposePull();
-            //this._settings.DockerComposeUp();
+            var config = TestHelper.InitConfiguration().Get<TestConfiguration>();
+            _setting = new DockerSettings(config);
+            this._setting.DockerComposePull();
+            this._setting.DockerComposeUp();
         }
 
-        [Ignore]
         [TestMethod]
         public void Test()
         {
-
             var co = new ChromeOptions();
             co.AddArgument("no-sandbox");
-            co.AddArgument("headless");
+            if (!this._setting.OpenChrome)
+                co.AddArgument("headless");
 
 
             co.PageLoadStrategy = PageLoadStrategy.Normal;
 
-            Policy.Handle<Exception>().Retry(4).Execute(() =>
+            Policy.Handle<Exception>().Retry(this._setting.RetryAttemps).Execute(() =>
             {
                 using (var driver = new ChromeDriver(Directory.GetCurrentDirectory(), co))
                 {
                     driver.Manage().Window.Maximize();
-                    driver.Navigate().GoToUrl(_settings.Url + "/signup");
+                    driver.Navigate().GoToUrl(this._setting.Url + "/signup");
 
                     var email = driver.FindElementByName("email");
                     email.SendKeys("myMail@mail.com");
@@ -81,7 +85,7 @@ namespace Calculator.Test.e2e
 
         public void Dispose()
         {
-            this._settings.DockerComposeDown();
+            this._setting.DockerComposeDown();
         }
     }
 }

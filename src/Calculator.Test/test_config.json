@@ -1,0 +1,6 @@
+﻿{
+  "Tag": "latest",
+  "ExternalPort": "5007",
+  "RetryAttemps": "3",
+  "OpenChrome": "true"
+}
