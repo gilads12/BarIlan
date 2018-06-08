@@ -33,4 +33,4 @@
 
 For run all the microservices goto cmd\Terminal and run "docker-compose -f \docker-compose.yml up"
 
-https://circleci.com/gh/gilads12/BarIlan/tree/master.svg?style=svg
+[![CircleCI](https://circleci.com/gh/gilads12/BarIlan/tree/master.svg?style=svg)](https://circleci.com/gh/gilads12/BarIlan/tree/master)
