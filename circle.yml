@@ -20,6 +20,7 @@ test:
 
   override:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
+    - cp ./src/Calculator.WebApi/DockerFile .
     - docker build .
 
 deployment:
