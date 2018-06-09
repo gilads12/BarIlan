@@ -10,7 +10,7 @@ namespace Calculator.Core
                 throw new NotValidInput(request.Input);
 
             if (request.calculatorState?.State == default(string))
-                if (request.Input != default(string) && request.Input.IsOperator())
+                if (request.Input.IsOperator()&& request.Input!="-")
                     throw new NotValidInput(request.Input);
                 else return new JsonResponse { Display = request.Input, State = request.Input };
 

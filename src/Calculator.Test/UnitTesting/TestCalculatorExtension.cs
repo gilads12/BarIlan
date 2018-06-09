@@ -29,14 +29,14 @@ namespace Calculator.Test.UnitTesting
         {
             //arrange //example of 1+2/5
             List<Token> infixTokens = new List<Token> { new NumericToken(1), new OperatorToken('+'), new NumericToken(2), new OperatorToken('/'), new NumericToken(3) };
-            List<string> expected = new List<string> {"1","2","+","3","/"};
+            List<string> expected = new List<string> { "1", "2", "+", "3", "/" };
 
             //act
             List<Token> result = infixTokens.InfixToPostfix().ToList();
             List<string> resultString = new List<string>();
-            foreach(var i in result)
+            foreach (var i in result)
             {
-                switch(i)
+                switch (i)
                 {
                     case NumericToken nt:
                         resultString.Add(nt.value.ToString());
@@ -121,6 +121,19 @@ namespace Calculator.Test.UnitTesting
 
             //assert
             result.Should().Be(false);
+        }
+        [TestMethod]
+        public void TestGetSignSymbol()
+        {
+            //arrange 
+            string state = "423-123543+3-4--5";
+            string expected = "-";
+
+            //act
+            string result = state.GetSignSymbol();
+
+            //assert
+            result.Should().Be(expected);
         }
     }
 }

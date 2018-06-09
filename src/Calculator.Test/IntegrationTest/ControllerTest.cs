@@ -121,6 +121,22 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be("-4");
         }
         [TestMethod]
+        public async Task TestNegativeDisplayAsync()
+        {
+            // Arrange
+            var request = new JsonRequest
+            {
+                calculatorState = new JsonResponse { State = @"2+8/5-6--5" },
+                Input = "4"
+            };
+
+            // Act
+            JsonResponse response = await SendJsonRequestAsync(request);
+
+            // Assert
+            response.Display.Should().Be("-54");
+        }
+        [TestMethod]
         public async Task TestComplexSumAsync()// todo rename!
         {
             // Arrange

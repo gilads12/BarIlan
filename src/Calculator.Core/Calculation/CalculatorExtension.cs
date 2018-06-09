@@ -12,11 +12,20 @@ namespace Calculator.Core
         private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
 
         public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
-        public static string GetLastNumeric(this JsonRequest state) => GetLastNumeric(state.calculatorState.State);
-        public static string GetLastNumeric(this string state) => state?.Split('-', '+', '*', '/', '=').LastOrDefault().EmptyToNull();
+        public static string GetLastNumeric(this string state) => GetSignSymbol(state)+ state?.Split('-', '+', '*', '/', '=').LastOrDefault().EmptyToNull();
+        public static string GetSignSymbol(this string state)
+        {
+            int index = state.LastIndexOf('-');
+            if (state?.LastIndexOf('-') == 0)
+                return "-";
+            if (index > -1 && state[index - 1].ToString().IsOperator())
+                return "-";
+            return "";
+        }
+
         public static string EmptyToNull(this string str) => str == string.Empty ? null : str;
         public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().PostProcessingTokens();
-        public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
+        public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.IsMatch(str[0].ToString());
         public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
         public static Token ToToken(this string str)
         {

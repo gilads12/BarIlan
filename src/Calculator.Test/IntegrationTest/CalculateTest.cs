@@ -136,11 +136,11 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be(result);
         }
         [TestMethod]
-        public void TestReturnsInputFromNotEmptyJsonRequestState()
+        public void TestDisplayNegative()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "5", calculatorState=new JsonResponse { State = "1" } };
-            string result = "15";
+            JsonRequest request = new JsonRequest { Input = "-" };
+            string result = "-";
 
             //act
             JsonResponse response = request.CalculateNextState();
@@ -148,5 +148,6 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+
     }
 }

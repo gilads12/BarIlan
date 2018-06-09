@@ -36,19 +36,19 @@ namespace Calculator.Test.e2e
             try
             {
 
-            var processInfo = new ProcessStartInfo()
-            {
-                FileName = "docker-machine",
-                Arguments = "ip",
-                RedirectStandardOutput = true
-            };
+                var processInfo = new ProcessStartInfo()
+                {
+                    FileName = "docker-machine",
+                    Arguments = "ip",
+                    RedirectStandardOutput = true
+                };
 
-            var proc = Process.Start(processInfo);
-            proc.WaitForExit();
-            proc.ExitCode.Should().Be(0);
-            string line = proc.StandardOutput.ReadToEnd();
+                var proc = Process.Start(processInfo);
+                proc.WaitForExit();
+                proc.ExitCode.Should().Be(0);
+                string line = proc.StandardOutput.ReadToEnd();
 
-            return line.Replace("\n", "");
+                return line.Replace("\n", "");
             }
             catch { return "127.0.0.1"; }
         }
@@ -80,7 +80,7 @@ namespace Calculator.Test.e2e
 
             process.WaitForExit();
             process.ExitCode.Should().Be(0);
-            var up = WaitForDockerUp(settings.Url).Result;
+            var up = WaitForDockerUp(settings).Result;
 
             if (!up)
             {
@@ -104,15 +104,15 @@ namespace Calculator.Test.e2e
         }
 
 
-        private static async Task<bool> WaitForDockerUp(string url)
+        private static async Task<bool> WaitForDockerUp(DockerSettings settings)
         {
             using (var client = new WebClient())
             {
                 var result = Policy.Handle<Exception>().
-                           WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
+                           WaitAndRetryAsync(settings.RetryAttemps, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)))
                            .ExecuteAsync(async () =>
                            {
-                               string HTMLSource = await client.DownloadStringTaskAsync(new Uri(url));
+                               string HTMLSource = await client.DownloadStringTaskAsync(new Uri(settings.Url));
                                return true;
                            })
                            .GetAwaiter()
