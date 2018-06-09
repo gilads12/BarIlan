@@ -22,6 +22,7 @@ test:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
    
 deployment:
+  staging:
    master:
     commands:
      - docker build ./src
