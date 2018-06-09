@@ -7,7 +7,7 @@ dependencies:
     - sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
     - sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
     - sudo apt-get update
-    - sudo apt-get install dotnet-sdk-2.0.2
+    - sudo apt-get install dotnet-sdk-2.0
  
 
 
@@ -20,10 +20,11 @@ test:
 
   override:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
-   
+    - docker build ./src/Calculator.WebApi/
+
 deployment:
-   master:
-    commands:
-     - docker build ./src
+  master:
+   branch: master
+   commands:
      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-     - docker pull gilads123/currency-calculator
+     - docker push gilads123/currency-calculator
