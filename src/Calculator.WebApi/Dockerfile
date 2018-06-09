@@ -1,8 +1,8 @@
-FROM microsoft/aspnetcore:2.0 AS base
+FROM microsoft/aspnetcore
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0 AS build
+FROM microsoft/aspnetcore-build
 WORKDIR /src
 COPY src/Calculator.WebApi/Calculator.WebApi.csproj src/Calculator.WebApi/
 COPY src/Calculator.Core/Calculator.Core.csproj src/Calculator.Core/
