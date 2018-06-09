@@ -20,10 +20,10 @@ test:
 
   override:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
-   Post: 
-     - docker build ./src
+  Post: 
+    - docker build ./src
 deployment:
-  hub:
+  master:
    branch: master
    commands:
      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
