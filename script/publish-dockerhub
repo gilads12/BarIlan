@@ -12,9 +12,9 @@ cd "$(dirname "$0")/.."
 echo "Publishing Docker Hub..."
 echo "$(dirname "$0")/.."
 
-docker build ./
+docker build -t currency-calculator ./
 docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-docker tag currency-calculator $DOCKER_USER/currency-calculator:latest
+docker tag currency-calculator $DOCKER_USER/currency-calculator:$TAG
 docker push $DOCKER_USER/currency-calculator
 
 echo "Done publishing!"
