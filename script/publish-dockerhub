@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.."
 
 echo "Publishing Docker Hub..."
 
-docker build -t .
+docker build -t ./ .
 docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 docker push gilads123/currency-calculator
 
