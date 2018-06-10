@@ -23,7 +23,7 @@
 # Preinstall:
 1) go to https://www.microsoft.com/net/download/windows and install dotnet core 2
 2) install chorme (for the selenium framework)
-3) go to ./bash-script and run "pull-images" for downloading our image
+3) go to ./script and run "pull-images" for downloading our image
 4) In src/Calculator.Test there "test_config.json" to config our tests
 
 # Test:
