@@ -5,11 +5,12 @@
 # exit on sub-module failure
 set -e
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/"
 
 # ------
 
 echo "Publishing Docker Hub..."
+echo "$(dirname "$0")/.."
 
 docker build ./
 docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
