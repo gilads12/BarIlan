@@ -25,11 +25,9 @@ test:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
     - cp ./src/Calculator.WebApi/Dockerfile .
     - sh script/build
-    - sh script/package         
 
 deployment:
   master:
    branch: master
    commands:
-     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-     - docker push gilads123/currency-calculator
+     - sh script/publish-dockerhub
