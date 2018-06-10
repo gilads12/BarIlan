@@ -25,7 +25,6 @@ test:
 
   override:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
-    - cp ./src/Calculator.WebApi/Dockerfile .
     - sh script/build
     - cp -R src/Calculator.WebApi/bin/Release/netcoreapp2.0/ $CIRCLE_ARTIFACTS/
 
