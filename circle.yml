@@ -11,7 +11,10 @@ dependencies:
     - sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
     - sudo apt-get update
     - sudo apt-get install dotnet-sdk-2.0.0
- 
+    - sudo apt-get install dotnet-dev-1.0.0-preview2.1-003177
+    - sudo apt-get install apt-transport-https
+    - sudo apt-get update
+    -  sudo apt-get install dotnet-hosting-2.0.5 
 
 
   override:
@@ -25,6 +28,8 @@ test:
     - dotnet test ./src/Calculator.Test --filter TestCategory!="E2E"
     - cp ./src/Calculator.WebApi/Dockerfile .
     - sh script/build
+    - cp -R src/Calculator.WebApi/bin/Release/netcoreapp2.0/ $CIRCLE_ARTIFACTS/
+
 
 deployment:
   master:
