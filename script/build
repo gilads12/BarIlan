@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# script/builds - builds the release
+
+# exit on sub-module failure
+set -e
+
+cd "$(dirname "$0")/.."
+
+# ------
+
+echo "Building..."
+
+cd src/Calculator.WebApi/
+rm -rf bin/Release
+dotnet publish -c Release
+
+echo "Done building!"
+
+# ------
