@@ -1,4 +1,5 @@
 ﻿using Calculator.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -11,13 +12,9 @@ namespace Calculator.Core
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
         private static Regex _floatRegex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
 
-        public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
-        public static string GetLastNumeric(this JsonRequest state) => GetLastNumeric(state.calculatorState.State);
-        public static string GetLastNumeric(this string state) => state?.Split('-', '+', '*', '/', '=').LastOrDefault().EmptyToNull();
-        public static string EmptyToNull(this string str) => str == string.Empty ? null : str;
-        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().PostProcessingTokens();
-        public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
         public static bool IsFloatNumber(this string str) => str == null ? false : _floatRegex.IsMatch(str);
+        public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
+        public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
         public static Token ToToken(this string str)
         {
             if (str.IsFloatNumber())
@@ -26,6 +23,19 @@ namespace Calculator.Core
                 return new OperatorToken(str[0]);
             throw new NotValidTokenException(str);
         }
+        /// <summary>
+        /// return the last numeric on the string (without sign)
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="fromEnd">True search for the last numeric from the end (129+ return default(string)) False search the last numeric from the begin of state </param>
+        /// <returns></returns>
+        public static string GetLastNumeric(this string state, bool fromEnd = false)
+        {
+            if (fromEnd)
+                return state?.Split( '-', '+', '*', '/', '=' ).LastOrDefault();
+           return  state?.Split(new[] { '-', '+', '*', '/', '=', ' ' }, StringSplitOptions.RemoveEmptyEntries).Last() ?? "0";
+        }
+        public static IEnumerable<Token> GetTokensFromJsonRequest(this JsonRequest request) => request?.calculatorState.State.PreProcessingString()?.GetTokensFromString().PostProcessingTokens();
         public static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
             int start = 0, index;
@@ -73,62 +83,72 @@ namespace Calculator.Core
 
             return postfix;
         }
-
-        private static string PreProcessingString(this string str) => str.Replace("--", "+").Replace("=", "");
-        private static IEnumerable<Token> PostProcessingTokens(this IEnumerable<Token> token) => token.ReplaceMinusToPluse().InfixToPostfix();
-        private static IEnumerable<Token> GetTokensFromString(this string str)
+        public static string LastNumericSign(this string state)// if end with '--', '+-', '/-', '*-' return -
         {
-            foreach (var s in str.SplitAndKeep(new[] { '*', '/', '+', '-', '=' }))
-            {
-                yield return s.ToToken();
-            }
+            state = "0+" + state;
+            int lastOperatorIndex = state.LastIndexOfAny(new[] { '-', '/', '+', '*' });
+            if (state[lastOperatorIndex] == '-' &&
+                (state[lastOperatorIndex - 1] == '+' || state[lastOperatorIndex - 1] == '-')
+                || state[lastOperatorIndex - 1] == '/' || state[lastOperatorIndex - 1] == '*')
+                return "-";
+            return "+";
         }
-        private static IEnumerable<Token> ReplaceMinusToPluse(this IEnumerable<Token> tokens)
+        public static string PadLeft(this string str, string pad)
+        {
+            return pad + str;
+        }
+        /// <summary>
+        /// Take care of +- , -- , /- , *- and insert the - to the next numeric
+        /// (importent! -+ , -/ , -* is invalid)
+        /// </summary>
+        /// <param name="tokens"></param>
+        /// <returns></returns>
+        public static IEnumerable<Token> InsertMinusToToken(this IEnumerable<Token> tokens)
         {
             IEnumerator<Token> enumerator = tokens.GetEnumerator();
-            bool flag = false;
-
-            enumerator.MoveNext();
-            switch (enumerator.Current)
-            {
-                case NumericToken n:
-                    yield return n;
-                    break;
-                case OperatorToken o:
-                    if (o.value == '-')
-                        flag = true;
-                    else yield return o;
-                    break;
-                default:
-                    break;
-            }
-
+            bool negative = false, lastTokenOperator = false;
             while (enumerator.MoveNext())
             {
                 Token token = enumerator.Current;
                 switch (token)
                 {
                     case NumericToken n:
-                        if (!flag)
+                        lastTokenOperator = false;
+                        if (!negative)
                             yield return n;
                         else
                         {
-                            flag = false;
+                            negative = false;
                             yield return new NumericToken(n.value * -1);
                         }
                         break;
                     case OperatorToken o:
-                        if (o.value == '-')
+                        if (lastTokenOperator)
                         {
-                            yield return new OperatorToken('+');
-                            flag = true;
+                            if (o.value == '-')
+                            {
+                                negative = true;
+                                lastTokenOperator = false;
+                            }
                         }
                         else
+                        {
+                            lastTokenOperator = true;
                             yield return o;
-                        break;
-                    default:
+                        }
                         break;
                 }
+            }
+        }
+
+
+        private static string PreProcessingString(this string str) => str.PadLeft("0+").Replace("=", "");
+        private static IEnumerable<Token> PostProcessingTokens(this IEnumerable<Token> token) => token.InsertMinusToToken().InfixToPostfix();
+        private static IEnumerable<Token> GetTokensFromString(this string str)
+        {
+            foreach (var s in str.SplitAndKeep(new[] { '*', '/', '+', '-', '=' }))
+            {
+                yield return s.ToToken();
             }
         }
     }

@@ -29,14 +29,14 @@ namespace Calculator.Test.UnitTesting
         {
             //arrange //example of 1+2/5
             List<Token> infixTokens = new List<Token> { new NumericToken(1), new OperatorToken('+'), new NumericToken(2), new OperatorToken('/'), new NumericToken(3) };
-            List<string> expected = new List<string> {"1","2","+","3","/"};
+            List<string> expected = new List<string> { "1", "2", "+", "3", "/" };
 
             //act
             List<Token> result = infixTokens.InfixToPostfix().ToList();
             List<string> resultString = new List<string>();
-            foreach(var i in result)
+            foreach (var i in result)
             {
-                switch(i)
+                switch (i)
                 {
                     case NumericToken nt:
                         resultString.Add(nt.value.ToString());
@@ -50,6 +50,36 @@ namespace Calculator.Test.UnitTesting
             //assert
             resultString.Should().BeEquivalentTo(expected,
                 options => options.WithStrictOrdering());
+        }
+        [TestMethod]
+        public void TestInsertMinusToToken()
+        {
+            //arrange //example of 1+2/5
+            List<Token> infixTokens = new List<Token> { new NumericToken(1), new OperatorToken('+'),new OperatorToken('-'), new NumericToken(2), new OperatorToken('/'),
+                new OperatorToken('-'), new NumericToken(3),new OperatorToken('+'), new OperatorToken('-'),new NumericToken(1),  new OperatorToken('-'), new OperatorToken('-'),
+                new NumericToken(7), new OperatorToken('-'), new NumericToken(9)  };
+            List<string> expected = new List<string> { "1", "+", "-2", "/", "-3", "+", "-1","-","-7","-","9" };
+
+            //act
+            List<Token> result = infixTokens.InsertMinusToToken().ToList();
+            List<string> resultString = new List<string>();
+            foreach (var i in result)
+            {
+                switch (i)
+                {
+                    case NumericToken nt:
+                        resultString.Add(nt.value.ToString());
+                        break;
+                    case OperatorToken ot:
+                        resultString.Add(ot.value.ToString());
+                        break;
+                }
+            }
+
+            //assert
+            resultString.Should().BeEquivalentTo(expected,
+                options => options.WithStrictOrdering());
+
         }
         [TestMethod]
         public void TestReturnsNumericFromFloatNumericString()
@@ -121,6 +151,60 @@ namespace Calculator.Test.UnitTesting
 
             //assert
             result.Should().Be(false);
+        }
+        [TestMethod]
+        public void TestGetLastNumericEndWithOperator()
+        {
+            //arrange 
+            string state = "12+3+";
+            string excpected = "3";
+
+            //act
+            string result = state.GetLastNumeric();
+
+            //assert
+            result.Should().Be(excpected);
+        }
+        [TestMethod]
+        public void TestGetLastNumericEndWithFromEnd()
+        {
+            //arrange 
+            string state = "12+3+";
+            string excpected = "";
+
+            //act
+            string result = state.GetLastNumeric(true);
+
+            //assert
+            result.Should().Be(excpected);
+        }
+
+
+        [TestMethod]
+        public void TestGetLastNumericSignPositiveSign()
+        {
+            //arrange 
+            string state = @"55*7=+1-3/-54+4";
+            string expected = "+";
+
+            //act
+            string result = state.LastNumericSign();
+
+            //assert
+            result.Should().Be(expected);
+        }
+        [TestMethod]
+        public void TestGetLastNumericSignNegativeSign()
+        {
+            //arrange 
+            string state = @"55*7=+1-3/-54";
+            string expected = "-";
+
+            //act
+            string result = state.LastNumericSign();
+
+            //assert
+            result.Should().Be(expected);
         }
     }
 }

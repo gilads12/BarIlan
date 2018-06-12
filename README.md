@@ -10,7 +10,8 @@
 
 1. We decided in case of failer in the request we initilayze the calcuator to "0" and return display="0".
 2. In our e2e test we didn't test the authentication, and only register our user (we didn't test if the user has added).
-
+3. Supporting on Negative numbers and negative calculations (for example "-6/4--4/-3*9+-8").
+	
 # overview:
 
 * This project was written in C# using .core 2.0

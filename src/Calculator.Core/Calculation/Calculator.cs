@@ -10,7 +10,7 @@ namespace Calculator.Core
                 throw new NotValidInput(request.Input);
 
             if (request.calculatorState?.State == default(string))
-                if (request.Input != default(string) && request.Input.IsOperator())
+                if ( request.Input.IsOperator())
                     throw new NotValidInput(request.Input);
                 else return new JsonResponse { Display = request.Input, State = request.Input };
 
@@ -22,9 +22,10 @@ namespace Calculator.Core
 
             else
             {
+                string sign = request.calculatorState.State.LastNumericSign() == "-" ? "-" : "";
                 if (request.Input.IsOperator())
-                    return new JsonResponse { State = request.calculatorState.State + request.Input, Display = request.calculatorState.State.GetLastNumeric() };
-                else return new JsonResponse { State = request.calculatorState.State + request.Input, Display = request.calculatorState.State.GetLastNumeric() + request.Input };
+                    return new JsonResponse { State = request.calculatorState.State + request.Input, Display = sign + request.calculatorState.State.GetLastNumeric() };
+                else return new JsonResponse { State = request.calculatorState.State + request.Input, Display = sign + request.calculatorState.State.GetLastNumeric(true) + request.Input };
             }
         }
     }

@@ -60,18 +60,7 @@ namespace Calculator.Test.IntegrationTest
             // Assert
             response.Display.Should().Be("0");
         }
-        [TestMethod]
-        public async Task TestComplexSumAndMultRteurnResoultAsync()
-        {
-            // Arrange
-            var request = new JsonRequest { Input = "=",calculatorState=new JsonResponse { State = @"3+7/2+6" } };
-
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
-
-            // Assert
-            response.Display.Should().Be("11");
-        }
+       
         [TestMethod]
         public async Task TestComplexSumAndMultRteurnFloatResoultAsync()
         {
@@ -89,39 +78,7 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be("11.5");
         }
         [TestMethod]
-        public async Task TestNegativeParameterAsync()
-        {
-            // Arrange
-            var request = new JsonRequest
-            {
-                calculatorState = new JsonResponse { State = @"-3+8/5+6--1" },
-                Input = "="
-            };
-
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
-
-            // Assert
-            response.Display.Should().Be("8");
-        }
-        [TestMethod]
-        public async Task TestNegativeResultAsync()
-        {
-            // Arrange
-            var request = new JsonRequest
-            {
-                calculatorState = new JsonResponse { State = @"2+8/5-6" },
-                Input = "="
-            };
-
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
-
-            // Assert
-            response.Display.Should().Be("-4");
-        }
-        [TestMethod]
-        public async Task TestComplexSumAsync()// todo rename!
+        public async Task TestComplexSumAfterAssignAsync()
         {
             // Arrange
             var request = new JsonRequest
@@ -168,6 +125,7 @@ namespace Calculator.Test.IntegrationTest
             // Assert
             response.Display.Should().Be("0");
         }
+        
         [TestMethod]
         public async Task TestCalculateEmptyStateAsync()
         {
