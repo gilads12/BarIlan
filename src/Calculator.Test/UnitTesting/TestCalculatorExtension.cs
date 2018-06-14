@@ -58,7 +58,7 @@ namespace Calculator.Test.UnitTesting
             List<Token> infixTokens = new List<Token> { new NumericToken(1), new OperatorToken('+'),new OperatorToken('-'), new NumericToken(2), new OperatorToken('/'),
                 new OperatorToken('-'), new NumericToken(3),new OperatorToken('+'), new OperatorToken('-'),new NumericToken(1),  new OperatorToken('-'), new OperatorToken('-'),
                 new NumericToken(7), new OperatorToken('-'), new NumericToken(9)  };
-            List<string> expected = new List<string> { "1", "+", "-2", "/", "-3", "+", "-1","-","-7","-","9" };
+            List<string> expected = new List<string> { "1", "+", "-2", "/", "-3", "+", "-1", "-", "-7", "-", "9" };
 
             //act
             List<Token> result = infixTokens.InsertMinusToToken().ToList();
@@ -82,10 +82,10 @@ namespace Calculator.Test.UnitTesting
 
         }
         [TestMethod]
-        public void TestReturnsNumericFromFloatNumericString()
+        public void TestReturnsNegativeNumericFromFloatNumericString()
         {
             //arrange 
-            string numeric = ".5";
+            string numeric = "-0.5";
 
             //act
             Token result = numeric.ToToken();
@@ -104,107 +104,114 @@ namespace Calculator.Test.UnitTesting
             Token result = numeric.ToToken();
         }
         [TestMethod]
-        public void TestReturnsOperatorFromOperatorChar()
+        public void TestIsFloatNumberMinus()
         {
             //arrange 
-            string numeric = "+";
+            string str = "-";
 
             //act
-            Token result = numeric.ToToken();
+            bool resoult = str.IsFloatNumber();
 
             //assert
-            result.Should().BeOfType(typeof(OperatorToken));
+            resoult.Should().Be(false);
         }
         [TestMethod]
-        public void TestIsOperatorFromOperatorAndNumeric()
+        public void TestGetStateEmptyRequst()
         {
             //arrange 
-            string numeric = "+4";
+            JsonRequest request = new JsonRequest();
 
             //act
-            bool result = numeric.IsOperator();
+            string result = request.GetState();
 
             //assert
-            result.Should().Be(false);
+            result.Should().Be("");
         }
         [TestMethod]
-        public void TestGetLastNumericFromString()
+        public void TestHandleFloatNumberOperator()
         {
             //arrange 
-            string numeric = "1+4.4";
-            string expected = "4.4";
+            JsonRequest request = new JsonRequest { Input = "5", calculatorState = new JsonResponse { IsOperator = true, IsMinus = true, Display = "-", State = "-" } };
 
             //act
-            string result = numeric.GetLastNumeric();
+            JsonResponse response = request.HandleFloatNumber(null);
 
             //assert
-            result.Should().Be(expected);
+            response.Display.Should().Be("5");
+            response.IsMinus.Should().Be(false);
+            response.IsOperator.Should().Be(false);
         }
         [TestMethod]
-        public void TestIsInputValidNotValidInput()
+        public void TestHandleFloatNumberNotOperator()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "1+" };
+            JsonRequest request = new JsonRequest { Input = "5", calculatorState = new JsonResponse { IsOperator = false, IsMinus = true, Display = "-", State = "-" } };
 
             //act
-            bool result = request.IsInputValid();
+            JsonResponse response = request.HandleFloatNumber(null);
 
             //assert
-            result.Should().Be(false);
+            response.Display.Should().Be("-5");
+            response.IsMinus.Should().Be(false);
+            response.IsOperator.Should().Be(false);
         }
         [TestMethod]
-        public void TestGetLastNumericEndWithOperator()
+        public void TestHandleOperatorIsOperatorInputMinus()
         {
             //arrange 
-            string state = "12+3+";
-            string excpected = "3";
+            JsonRequest request = new JsonRequest { Input = "-", calculatorState = new JsonResponse { IsOperator = true, IsMinus = true, Display = "12", State = "100+12-" } };
 
             //act
-            string result = state.GetLastNumeric();
+            JsonResponse response = request.HandleOperator(null);
 
             //assert
-            result.Should().Be(excpected);
+            response.Display.Should().Be("-");
+            response.IsMinus.Should().Be(true);
+            response.IsOperator.Should().Be(false);
         }
         [TestMethod]
-        public void TestGetLastNumericEndWithFromEnd()
+        public void TestHandleOperatorIsDoubleOperator()
         {
             //arrange 
-            string state = "12+3+";
-            string excpected = "";
+            JsonRequest request = new JsonRequest { Input = "+", calculatorState = new JsonResponse { IsOperator = true, IsMinus = true, Display = "12", State = "100+12-" } };
 
             //act
-            string result = state.GetLastNumeric(true);
+            JsonResponse response = request.HandleOperator(null);
 
             //assert
-            result.Should().Be(excpected);
-        }
-
-
-        [TestMethod]
-        public void TestGetLastNumericSignPositiveSign()
-        {
-            //arrange 
-            string state = @"55*7=+1-3/-54+4";
-            string expected = "+";
-
-            //act
-            string result = state.LastNumericSign();
-
-            //assert
-            result.Should().Be(expected);
+            response.Display.Should().Be("");
+            response.IsMinus.Should().Be(false);
+            response.IsOperator.Should().Be(false);
         }
         [TestMethod]
-        public void TestGetLastNumericSignNegativeSign()
+        public void TestHandleOperatorEmptyStateOperator()
         {
             //arrange 
-            string state = @"55*7=+1-3/-54";
-            string expected = "-";
+            JsonRequest request = new JsonRequest { Input = "+" };
 
             //act
-            string result = state.LastNumericSign();
+            JsonResponse response = request.HandleOperator(null);
 
             //assert
-            result.Should().Be(expected);
+            response.Display.Should().Be("");
+            response.IsMinus.Should().Be(false);
+            response.IsOperator.Should().Be(false);
+        }
+        [TestMethod]
+        public void TestHandleOperatorEmptyStateOperatorMinus()
+        {
+            //arrange 
+            JsonRequest request = new JsonRequest { Input = "-" };
+
+            //act
+            JsonResponse response = request.HandleOperator(null);
+
+            //assert
+            response.Display.Should().Be("-");
+            response.IsMinus.Should().Be(true);
+            response.IsOperator.Should().Be(false);
         }
     }
+
+
 }

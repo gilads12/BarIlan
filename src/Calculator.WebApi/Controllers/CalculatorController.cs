@@ -2,6 +2,7 @@
 using Calculator.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 
 namespace Calculator.WebApi.Controllers
@@ -36,11 +37,12 @@ namespace Calculator.WebApi.Controllers
             {
                 return this.Ok(request.CalculateNextState());
             }
-            catch (GlobalException e)
+            catch (Exception e)
             {
-                _logger.LogError(e.ErrorMessage);
-                return this.Ok(new JsonResponse { Display = "0" });
+                _logger.LogError(e.Message);
+                return this.Ok(JsonRequestExtension.InitialResponse());
             }
+            
         }
     }
 }

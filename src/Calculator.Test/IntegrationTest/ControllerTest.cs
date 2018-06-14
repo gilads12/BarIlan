@@ -28,7 +28,7 @@ namespace Calculator.Test.IntegrationTest
         public async Task TestEmptyStateNumericInputRteutnInputAsync()
         {
             // Arrange
-            var request = new JsonRequest {Input="1" };
+            var request = new JsonRequest { Input = "1" };
 
             //act
             JsonResponse response = await SendJsonRequestAsync(request);
@@ -46,53 +46,94 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = await SendJsonRequestAsync(request);
 
             // Assert
-            response.Display.Should().Be("0");
+            response.Display.Should().Be("");
         }
         [TestMethod]
         public async Task TestDoubleInputRteutnInputAsync()
         {
             // Arrange
-            var request = new JsonRequest { Input = "9+" };
+            var request = new JsonRequest { };
+            JsonResponse response;
 
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
 
-            // Assert
-            response.Display.Should().Be("0");
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "9+";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+                
+            }
+            catch { throw; }
         }
+        [TestMethod]
+        public async Task TestNumberfterAssignAsync()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "3";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("3");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "+";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("3");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "6";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("6");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "=";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("9");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "3";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("93");
+                //--------------//
+
+            }
+            catch { throw; }
        
-        [TestMethod]
-        public async Task TestComplexSumAndMultRteurnFloatResoultAsync()
-        {
-            // Arrange
-            var request = new JsonRequest
-            {
-                calculatorState = new JsonResponse { State = @"3+8/2+6" },
-                Input = "="
-            };
-
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
-
-            // Assert
-            response.Display.Should().Be("11.5");
         }
-        [TestMethod]
-        public async Task TestComplexSumAfterAssignAsync()
-        {
-            // Arrange
-            var request = new JsonRequest
-            {
-                calculatorState = new JsonResponse { State = @"3+6=+3" },
-                Input = "="
-            };
 
-            // Act
-            JsonResponse response = await SendJsonRequestAsync(request);
-
-            // Assert
-            response.Display.Should().Be("12");
-        }
         [TestMethod]
         public async Task TestInvalidOperatorInputAsync()
         {
@@ -107,7 +148,7 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = await SendJsonRequestAsync(request);
 
             // Assert
-            response.Display.Should().Be("0");
+            response.Display.Should().Be("");
         }
         [TestMethod]
         public async Task TestCalculateInvalidOperatorStateAsync()
@@ -123,9 +164,9 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = await SendJsonRequestAsync(request);
 
             // Assert
-            response.Display.Should().Be("0");
+            response.Display.Should().Be("");
         }
-        
+
         [TestMethod]
         public async Task TestCalculateEmptyStateAsync()
         {
@@ -139,10 +180,10 @@ namespace Calculator.Test.IntegrationTest
             JsonResponse response = await SendJsonRequestAsync(request);
 
             // Assert
-            response.Display.Should().Be("0");
+            response.Display.Should().Be("");
         }
         [TestMethod]
-        public async Task FullSessionTest()
+        public async Task TestStartWithMinus()
         {
             // Arrange
             var request = new JsonRequest { };
@@ -153,7 +194,145 @@ namespace Calculator.Test.IntegrationTest
             try
             {
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("0");
+                response.Display.Should().Be("");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "-";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "1";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-1");
+                //--------------//
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public async Task TestDoubleOperators()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "-";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "+";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public async Task TestMultNegativNumber()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "7";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("7");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "*";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("7");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "-";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "7";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-7");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "=";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-49");
+                //--------------//
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public async Task TestNoOperatorAssigment()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
                 //--------------//
 
                 //--------------//
@@ -166,50 +345,33 @@ namespace Calculator.Test.IntegrationTest
 
                 //--------------//
                 request.calculatorState = response;
-                request.Input = "2";
-
-                response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("12");
-                //--------------//
-
-                //--------------//
-                request.calculatorState = response;
-                request.Input = "+";
-
-                response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("12");
-                //--------------//
-
-                //--------------//
-                request.calculatorState = response;
-                request.Input = "3";
-
-                response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("3");
-                //--------------//
-
-                //--------------//
-                request.calculatorState = response;
                 request.Input = "=";
 
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("15");
+                response.Display.Should().Be("1");
                 //--------------//
+                
+            }
 
-                //--------------//
-                request.calculatorState = response;
-                request.Input = "/";
+            catch
+            {
+                throw;
+            }
+        }
 
+        [TestMethod]
+        public async Task TestNegativeNumerAfterAssigment()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("15");
-                //--------------//
-
-                //--------------//
-                request.calculatorState = response;
-                request.Input = "3";
-
-                response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("3");
+                response.Display.Should().Be("");
                 //--------------//
 
                 //--------------//
@@ -217,15 +379,15 @@ namespace Calculator.Test.IntegrationTest
                 request.Input = "-";
 
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("3");
+                response.Display.Should().Be("-");
                 //--------------//
 
                 //--------------//
                 request.calculatorState = response;
-                request.Input = "10";
+                request.Input = "7";
 
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("10");
+                response.Display.Should().Be("-7");
                 //--------------//
 
                 //--------------//
@@ -233,7 +395,15 @@ namespace Calculator.Test.IntegrationTest
                 request.Input = "=";
 
                 response = await SendJsonRequestAsync(request);
-                response.Display.Should().Be("-5");
+                response.Display.Should().Be("-7");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "7";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("-77");
                 //--------------//
 
             }

@@ -1,4 +1,7 @@
 ﻿using Calculator.Core.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Calculator.Core
 {
@@ -6,27 +9,78 @@ namespace Calculator.Core
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)
         {
-            if (!request.IsInputValid())
-                throw new NotValidInput(request.Input);
-
-            if (request.calculatorState?.State == default(string))
-                if ( request.Input.IsOperator())
-                    throw new NotValidInput(request.Input);
-                else return new JsonResponse { Display = request.Input, State = request.Input };
+            //if (!request.IsRequestValid())//todo
+            //throw new NotValidInput(request.Input);// rename to not valid requst
 
             if (request.Input == "=")
             {
-                var tokens = request.GetTokensFromJsonRequest();
-                return new JsonResponse { State = new PolishCalculate(tokens).Calculate().ToString(), Display = new PolishCalculate(tokens).Calculate().ToString() };
+                var tokens = request.GetTokens();
+                var result = new PolishCalculate(tokens).Calculate().ToString();
+                return new JsonResponse { State = result, Display = result, IsOperator = false };
             }
-
             else
             {
-                string sign = request.calculatorState.State.LastNumericSign() == "-" ? "-" : "";
-                if (request.Input.IsOperator())
-                    return new JsonResponse { State = request.calculatorState.State + request.Input, Display = sign + request.calculatorState.State.GetLastNumeric() };
-                else return new JsonResponse { State = request.calculatorState.State + request.Input, Display = sign + request.calculatorState.State.GetLastNumeric(true) + request.Input };
+                var state = request.GetState();
+                if (request.Input.IsFloatNumber())
+                    return request.HandleFloatNumber(state);
+                else if (request.Input.IsOperator())
+                    return request.HandleOperator(state);
+                return JsonRequestExtension.InitialResponse();
             }
+
         }
+
+    }
+
+    public static class JsonRequestExtension
+    {
+        public static string GetState(this JsonRequest request)
+        {
+            return request.calculatorState?.State + request.Input;
+        }
+
+        public static JsonResponse HandleFloatNumber(this JsonRequest request, string state)
+        {
+            if (request.calculatorState.IsOperator)
+                return new JsonResponse { Display = request.Input, IsOperator = false, State = state };
+            return new JsonResponse { Display = request.calculatorState?.Display + request.Input, IsOperator = false, State = state };
+        }
+
+        public static JsonResponse HandleOperator(this JsonRequest request, string state)
+        {
+            if (request.calculatorState.IsOperator)
+            {
+                if (request.Input == "-")
+                    return new JsonResponse { Display = "-", State = state, IsOperator = false, IsMinus = true };
+                if (request.Input.IsOperator())
+                    return InitialResponse();
+
+            }
+            else if (request.calculatorState.IsMinus || (request.calculatorState.State == default(string) && request.Input != "-"))
+                return InitialResponse();
+            else if (!request.calculatorState.IsMinus && request.Input == "-")
+                return new JsonResponse { Display = request.Input, IsMinus = true, IsOperator = false, State = state };
+            return new JsonResponse { Display = request.calculatorState.Display, IsOperator = true, IsMinus = false, State = state };
+        }
+
+        public static JsonResponse InitialResponse() => new JsonResponse { Display = "", IsOperator = false, IsMinus = false, State = "" };
+
+        public static bool IsRequestValid(this JsonRequest request)
+        {
+
+            if (request == null || request.Input == default(string))
+                return false;
+            if (!request.Input.IsFloatNumber() && !request.Input.IsOperator())
+                return false;
+            if (request.Input.IsOperator() && request.Input != "-")
+            {
+                if (request.calculatorState == null || request.calculatorState.State == default(string))
+                    return false;
+            }
+            var fullstate = request.calculatorState?.State + request.Input;//todo finish
+            return true;
+        }
+
+        public static IEnumerable<Token> GetTokens(this JsonRequest request) => request?.calculatorState.State.Replace("=", "").GetTokensFromString().PostProcessingTokens();
     }
 }

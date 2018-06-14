@@ -9,26 +9,12 @@ namespace Calculator.Test.IntegrationTest
     public class CalculateTest
     {
 
-        
         [TestMethod]
         public void TestSumCalculationFromJsonRequest()
         {
             //arrange 
             JsonRequest request = new JsonRequest { Input = "=", calculatorState = new JsonResponse { State = "15+4" } };
             string result = "19";
-
-            //act
-            JsonResponse response = request.CalculateNextState();
-
-            //assert
-            response.Display.Should().Be(result);
-        }
-        [TestMethod]
-        public void TestFloatSumCalculationFromJsonRequest()
-        {
-            //arrange 
-            JsonRequest request = new JsonRequest { Input = "=", calculatorState=new JsonResponse { State = "15.2+4.5" } };
-            string result = "19.7";
 
             //act
             JsonResponse response = request.CalculateNextState();
@@ -105,7 +91,7 @@ namespace Calculator.Test.IntegrationTest
         public void TestCalculationWithNagativeNumbersFromJsonRequest()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "=", calculatorState=new JsonResponse { State = @"15+6*2-5-2/5=-3-15" } };
+            JsonRequest request = new JsonRequest { Input = "=", calculatorState=new JsonResponse { State = @"15+6*2-5-2/5-3-15" } };
             string result = "-11";
 
             //act
@@ -114,34 +100,25 @@ namespace Calculator.Test.IntegrationTest
             //assert
             response.Display.Should().Be(result);
         }
+
         [TestMethod]
-        [ExpectedException(typeof(NotValidInput))]
-        public void TestReturnsNullFromEmptyJsonRequest()
+        public void TestEmptyJsonRequestReturnEmptyDisplay()
         {
             //arrange 
             JsonRequest request = new JsonRequest();
 
             //act
             JsonResponse response = request.CalculateNextState();
-        }
-        [TestMethod]
-        public void TestReturnsInputFromEmptyJsonRequestState()
-        {
-            //arrange 
-            JsonRequest request = new JsonRequest { Input = "5" };
-            string result = "5";
-
-            //act
-            JsonResponse response = request.CalculateNextState();
 
             //assert
-            response.Display.Should().Be(result);
+            response.Display.Should().Be("");
         }
+       
         [TestMethod]
         public void TestReturnsInputFromNotEmptyJsonRequestState()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "5", calculatorState=new JsonResponse { State = "1" } };
+            JsonRequest request = new JsonRequest { Input = "5", calculatorState=new JsonResponse { State = "1",Display="1" } };
             string result = "15";
 
             //act
@@ -151,22 +128,10 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be(result);
         }
         [TestMethod]
-        public void TestComplexSumAndMultRteurnResoultAsync()
-        {
-            // Arrange
-            var request = new JsonRequest { Input = "=", calculatorState = new JsonResponse { State = @"3+7/2+6" } };
-
-            // Act
-            JsonResponse response = request.CalculateNextState();
-
-            // Assert
-            response.Display.Should().Be("11");
-        }
-        [TestMethod]
         public void TestNegativeDisplay()
         {
             //arrange 
-            JsonRequest request = new JsonRequest { Input = "8", calculatorState = new JsonResponse { State = @"34/-17" } };
+            JsonRequest request = new JsonRequest { Input = "8", calculatorState = new JsonResponse { State = @"34/-17",Display="-17" } };
             string result = "-178";
 
             //act

@@ -118,6 +118,7 @@ namespace Calculator.Test
             expected.Should().Be(result);
 
         }
+
         [TestMethod]
         public void TestFloatParameter()
         {
@@ -132,6 +133,7 @@ namespace Calculator.Test
             expected.Should().Be(result);
 
         }
+
         [TestMethod]
         public void TestNegativeParameterAndResoult()
         {
