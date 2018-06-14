@@ -167,6 +167,7 @@ namespace Calculator.Test.IntegrationTest
             response.Display.Should().Be("");
         }
 
+
         [TestMethod]
         public async Task TestCalculateEmptyStateAsync()
         {
@@ -249,6 +250,44 @@ namespace Calculator.Test.IntegrationTest
 
                 response = await SendJsonRequestAsync(request);
                 response.Display.Should().Be("");
+                //--------------//
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public async Task TestMinusOperator()
+        {
+            // Arrange
+            var request = new JsonRequest { };
+            JsonResponse response;
+
+            //testing
+            //--------------//
+            try
+            {
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "1";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("1");
+                //--------------//
+
+                //--------------//
+                request.calculatorState = response;
+                request.Input = "-";
+
+                response = await SendJsonRequestAsync(request);
+                response.Display.Should().Be("1");
                 //--------------//
             }
 

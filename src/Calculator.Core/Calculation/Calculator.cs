@@ -21,10 +21,10 @@ namespace Calculator.Core
             else
             {
                 var state = request.GetState();
-                if (request.Input.IsFloatNumber())
-                    return request.HandleFloatNumber(state);
-                else if (request.Input.IsOperator())
+                 if (request.Input.IsOperator())
                     return request.HandleOperator(state);
+                else if (request.Input.IsFloatNumber())
+                    return request.HandleFloatNumber(state);
                 return JsonRequestExtension.InitialResponse();
             }
 
@@ -58,7 +58,7 @@ namespace Calculator.Core
             }
             else if (request.calculatorState.IsMinus || (request.calculatorState.State == default(string) && request.Input != "-"))
                 return InitialResponse();
-            else if (!request.calculatorState.IsMinus && request.Input == "-")
+            else if (!request.calculatorState.IsMinus && request.Input == "-" && string.IsNullOrEmpty(request.calculatorState.State))
                 return new JsonResponse { Display = request.Input, IsMinus = true, IsOperator = false, State = state };
             return new JsonResponse { Display = request.calculatorState.Display, IsOperator = true, IsMinus = false, State = state };
         }
