@@ -63,21 +63,29 @@ namespace Calculator.Test.e2e
                     var subtract = driver.FindElementByClassName("operator-subtract");
                     var plus = driver.FindElementByClassName("operator-plus");
                     var equal = driver.FindElementByClassName("operator-equals");
-
-
-                    oneDig.Click();
-                    oneDig.Click();
-                    subtract.Click();
-                    SevenDig.Click();
-                    equal.Click();
                     var display = driver.FindElementByClassName("display");
 
-                    plus.Click();
-                    fiveDig.Click();
                     subtract.Click();
+                    display.Text.Should().Be("-");
                     oneDig.Click();
+                    display.Text.Should().Be("-1");
+                    oneDig.Click();
+                    display.Text.Should().Be("-11");
+                    plus.Click();
+                    display.Text.Should().Be("-11");
+                    SevenDig.Click();
+                    display.Text.Should().Be("7");
                     equal.Click();
-                    display.Text.Should().Be("8");
+                    display.Text.Should().Be("-4");
+
+                    plus.Click();
+                    display.Text.Should().Be("-4");
+                    subtract.Click();
+                    display.Text.Should().Be("-");
+                    fiveDig.Click();
+                    display.Text.Should().Be("-5");
+                    equal.Click();
+                    display.Text.Should().Be("-9");
                 }
             });
 
