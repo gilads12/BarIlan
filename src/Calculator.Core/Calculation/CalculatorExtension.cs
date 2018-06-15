@@ -12,7 +12,6 @@ namespace Calculator.Core
         private static Regex _operatorRegex = new Regex(@"[+-/*=]");
         public static bool IsFloatNumber(this string str) => str == null ? false : float.TryParse(str, out _);
         public static bool IsOperator(this string str) => str == null ? false : str.Length == 1 && _operatorRegex.Match(str[0].ToString()).Success;
-        public static bool IsInputValid(this JsonRequest request) => ((request.Input.IsOperator() && request.Input.Length == 1) || request.Input.IsFloatNumber());
         public static Token ToToken(this string str)
         {
             if (str.IsFloatNumber())

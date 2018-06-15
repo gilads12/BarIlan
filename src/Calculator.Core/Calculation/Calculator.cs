@@ -65,22 +65,6 @@ namespace Calculator.Core
 
         public static JsonResponse InitialResponse() => new JsonResponse { Display = "", IsOperator = false, IsMinus = false, State = "" };
 
-        public static bool IsRequestValid(this JsonRequest request)
-        {
-
-            if (request == null || request.Input == default(string))
-                return false;
-            if (!request.Input.IsFloatNumber() && !request.Input.IsOperator())
-                return false;
-            if (request.Input.IsOperator() && request.Input != "-")
-            {
-                if (request.calculatorState == null || request.calculatorState.State == default(string))
-                    return false;
-            }
-            var fullstate = request.calculatorState?.State + request.Input;//todo finish
-            return true;
-        }
-
         public static IEnumerable<Token> GetTokens(this JsonRequest request) => request?.calculatorState.State.Replace("=", "").GetTokensFromString().PostProcessingTokens();
     }
 }
