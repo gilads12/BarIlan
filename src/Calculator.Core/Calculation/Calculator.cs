@@ -9,9 +9,6 @@ namespace Calculator.Core
     {
         public static JsonResponse CalculateNextState(this JsonRequest request)
         {
-            //if (!request.IsRequestValid())//todo
-            //throw new NotValidInput(request.Input);// rename to not valid requst
-
             if (request.Input == "=")
             {
                 var tokens = request.GetTokens();
@@ -21,7 +18,7 @@ namespace Calculator.Core
             else
             {
                 var state = request.GetState();
-                 if (request.Input.IsOperator())
+                if (request.Input.IsOperator())
                     return request.HandleOperator(state);
                 else if (request.Input.IsFloatNumber())
                     return request.HandleFloatNumber(state);

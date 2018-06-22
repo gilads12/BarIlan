@@ -20,12 +20,6 @@ namespace Calculator.Core
                 return new OperatorToken(str[0]);
             throw new NotValidTokenException(str);
         }
-        /// <summary>
-        /// return the last numeric on the string (without sign)
-        /// </summary>
-        /// <param name="state"></param>
-        /// <param name="fromEnd">True search for the last numeric from the end (129+ return default(string)) False search the last numeric from the begin of state </param>
-        /// <returns></returns>
         public static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
         {
             int start = 0, index;
@@ -73,12 +67,6 @@ namespace Calculator.Core
 
             return postfix;
         }
-        /// <summary>
-        /// Take care of +- , -- , /- , *- and insert the - to the next numeric
-        /// (importent! -+ , -/ , -* is invalid)
-        /// </summary>
-        /// <param name="tokens"></param>
-        /// <returns></returns>
         public static IEnumerable<Token> InsertMinusToToken(this IEnumerable<Token> tokens)
         {
             IEnumerator<Token> enumerator = tokens.GetEnumerator();
